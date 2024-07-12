@@ -1,0 +1,36 @@
+.form-field {
+  margin: 50px 0 50px 0;
+  height: 50px;
+  line-height: 50px;
+  background-color: #f5f5f5;
+}
+
+.field .email {
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.field .password {
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.field .password-conf {
+  width: 100%;
+  max-width: 330px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.actions .button {
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+}

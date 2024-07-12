@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title
+      | Myapp
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+  body
+    - if user_signed_in?
+      = link_to "ユーザー", user_path(current_user.id)
+      = link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }
+    - else
+      = link_to "ログイン", new_user_session_path
+      = link_to "サインアップ", new_user_registration_path
+    = render 'layouts/flash'
+    = yield
