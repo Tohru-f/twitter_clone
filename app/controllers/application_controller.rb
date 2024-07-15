@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # 新規登録時(sign_up時)にphone_numberとbirthdayというキーのパラメーターを追加で許可する
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :birthday, :phone_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name birthday phone_number])
   end
 end
