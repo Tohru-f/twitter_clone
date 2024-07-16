@@ -1,0 +1,15 @@
+h2
+  | Users
+hr
+p
+  strong
+    | ユーザー名
+  = @user.name
+  p
+    p
+      strong
+        | e-mail
+      = @user.email
+    = form_with local: true do |form|
+      p
+        = form.submit "ポストする", class: "btn btn-primary rounded-pill"
