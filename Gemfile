@@ -91,3 +91,7 @@ end
 gem 'html2slim-ruby3'
 
 gem 'slim-rails'
+
+gem 'dotenv-rails'
+gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
