@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   get 'home/index'
   # get 'users/show'
-  devise_for :users
+  devise_for :users,
+             controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
+
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
