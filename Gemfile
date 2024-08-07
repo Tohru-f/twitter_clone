@@ -51,7 +51,7 @@ gem 'bootsnap', require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 gem 'devise'
 gem 'omniauth', '>= 1.0.0'
@@ -73,6 +73,7 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'web-console'
+  gem 'bullet'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -95,3 +96,7 @@ gem 'slim-rails'
 gem 'dotenv-rails'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
+gem 'aws-sdk-s3', require: false
+gem 'pry-rails'
+gem 'kaminari'
+gem 'bootstrap4-kaminari-views'

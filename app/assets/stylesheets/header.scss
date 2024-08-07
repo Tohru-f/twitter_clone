@@ -1,0 +1,26 @@
+header {
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.header_under {
+  border-bottom: solid 2px #a9a9a9;
+}
+
+header ul li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 15px;
+  font-size: 30px;
+}
+
+header ul .btn {
+  margin-top: 5px;
+}
+
+header ul .btn-outline-light {
+  margin-right: 15px;
+}
