@@ -51,7 +51,7 @@ gem 'bootsnap', require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem 'image_processing', '~> 1.2'
 
 gem 'devise'
 gem 'omniauth', '>= 1.0.0'
@@ -66,6 +66,7 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem 'bullet'
   gem 'htmlbeautifier'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
@@ -92,6 +93,10 @@ gem 'html2slim-ruby3'
 
 gem 'slim-rails'
 
+gem 'aws-sdk-s3', require: false
+gem 'bootstrap4-kaminari-views'
 gem 'dotenv-rails'
+gem 'kaminari'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
+gem 'pry-rails'
