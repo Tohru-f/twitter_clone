@@ -68,7 +68,7 @@ body
           p = tweet.comment
           - if tweet.images.attached?
             = image_tag tweet.images[0], size: '250x200'
-        = paginate @tweets, :param_name => 'page_1', params: {tab: 'recommend'}, theme: 'twitter-bootstrap-4'
+        = paginate @tweets, :param_name => 'recmmend', params: {tab: 'recommend'}, theme: 'twitter-bootstrap-4'
         
       div class="#{'show active' if params[:tab] == 'follow'} tab-pane fade " id="following"
         - if current_user
@@ -79,6 +79,6 @@ body
             p = tweet.comment
             - if tweet.images.attached?
               = image_tag tweet.images[0], size: '250x200'
-          = paginate @followers_tweets, :param_name => 'page_2', params: {tab: 'follow'}, theme: 'twitter-bootstrap-4'
+          = paginate @followers_tweets, :param_name => 'follow', params: {tab: 'follow'}, theme: 'twitter-bootstrap-4'
         - else
           p ログインしていません
