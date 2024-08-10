@@ -1,0 +1,57 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+nav {
+  border: solid 1px #a9a9a9;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  width: 300px;
+  float: left;
+}
+
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 15px;
+  font-size: 30px;
+  color: white;
+}
+
+.tabs {
+  float: right;
+  width: calc(100% - 300px);
+}
+
+ul.nav.nav-tabs {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tab_content {
+  float: right;
+  color: white;
+}
+
+.tab_content ul li {
+  display: inline-block;
+  list-style: none;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.tweet {
+  color: white;
+  border-bottom: solid 1px #a9a9a9;
+  width: 100%
+}
+
+.tweet .image {
+  cursor: pointer;
+}
