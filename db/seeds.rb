@@ -8,37 +8,60 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 user1 = User.create!(
-  email: 'sample1@gmail.com',
+  email: 'ryoma@gmail.com',
   phone_number: '090-1234-5678',
-  birthday: 20_240_728,
-  name: 'sample1',
+  birthday: 18360103,
+  name: '坂本 竜馬',
   password: 'password',
-  confirmed_at: Time.zone.today
+  confirmed_at: Time.zone.today,
+  profile: '土佐脱藩郷士 北辰一刀流免許皆伝 海援隊隊長 薩長同盟の盟約に尽力',
+  place: '土佐藩(現高知県出身)',
+  website: 'https://www.google.co.jp'
 )
+user1.icon.attach(io: File.open(Rails.root.join('app/assets/images/Sakamoto_Ryoma.jpg')), filename: 'Sakamoto_Ryoma.jpg')
+user1.header.attach(io: File.open(Rails.root.join('app/assets/images/kumiaikakunikikyo.jpg')), filename: 'kumiaikakunikikyo.jpg')
+
 user2 = User.create!(
-  email: 'sample2@yahoo.co.jp',
+  email: 'hanpeita@yahoo.co.jp',
   phone_number: '070-1234-5678',
-  birthday: 20_240_707,
-  name: 'sample2',
+  birthday: 18291024,
+  name: '武市 半平太',
   password: 'password',
-  confirmed_at: Time.zone.today
+  confirmed_at: Time.zone.today,
+  profile: '土佐藩白札郷士 鏡心明智流免許皆伝 土佐勤王党党首',
+  place: '土佐藩(現高知県出身)',
+  website: 'https://www.yahoo.co.jp'
 )
+user2.icon.attach(io: File.open(Rails.root.join('app/assets/images/Takechi_Hanpeita.jpg')), filename: 'Takechi_Hanpeita.jpg')
+user2.header.attach(io: File.open(Rails.root.join('app/assets/images/marunikakinohana.jpg')), filename: 'marunikakinohana.jpg')
+
 user3 = User.create!(
-  email: 'sample3@hotmail.com',
+  email: 'izo@hotmail.com',
   phone_number: '080-1234-5678',
-  birthday: 20_240_813,
-  name: 'sample3',
+  birthday: 18380214,
+  name: '岡田 以蔵',
   password: 'password',
-  confirmed_at: Time.zone.today
+  confirmed_at: Time.zone.today,
+  profile: '土佐藩郷士 鏡心明智流 勝海舟の護衛',
+  place: '土佐藩(現高知県出身)',
+  website: 'https://www.microsoft.com/ja-jp/'
 )
+user3.icon.attach(io: File.open(Rails.root.join('app/assets/images/Okada_Izo.jpg')), filename: 'Okada_Izo.jpg')
+user3.header.attach(io: File.open(Rails.root.join('app/assets/images/maruninarabikine.png')), filename: 'maruninarabikine.png')
+
 user4 = User.create!(
-  email: 'sample4@mocha.ocn.ne.jp',
+  email: 'shintaro@mocha.ocn.ne.jp',
   phone_number: '050-1234-5678',
-  birthday: 20_240_610,
-  name: 'sample4',
+  birthday: 18380506,
+  name: '中岡 慎太郎',
   password: 'password',
-  confirmed_at: Time.zone.today
+  confirmed_at: Time.zone.today,
+  profile: '土佐藩郷士 陸援隊隊長 薩長同盟の盟約に尽力',
+  place: '土佐藩(現高知県出身)',
+  website: 'https://www.ocn.ne.jp'
 )
+user4.icon.attach(io: File.open(Rails.root.join('app/assets/images/Nakaoka_Shintaro.jpg')), filename: 'Nakaoka_Shintaro.jpg')
+user4.header.attach(io: File.open(Rails.root.join('app/assets/images/maruniwatanohana.gif')), filename: 'maruniwatanohana.gif')
 
 follower1 = Follower.create!(
   user_id: user2.id
@@ -90,26 +113,48 @@ Relation.create!(
 
 User.all.ids.sort.each do |user_id|
   Tweet.create!(
-    comment: 'サンプル1',
+    content: 'サンプル1',
     user_id:
   )
   Tweet.create!(
-    comment: 'サンプル2',
+    content: 'サンプル2',
     user_id:
   )
   tweet3 = Tweet.create!(
-    comment: 'サンプル3',
+    content: 'サンプル3',
     user_id:
   )
   tweet3.images.attach(io: File.open(Rails.root.join('app/assets/images/BIG_TUNA.JPG')), filename: 'BIG_TUNA.JPG')
   tweet4 = Tweet.create!(
-    comment: 'サンプル4',
+    content: 'サンプル4',
     user_id:
   )
   tweet4.images.attach(io: File.open(Rails.root.join('app/assets/images/yellowtail_kingfish2.jpg')),
                        filename: 'yellowtail_kingfish2.jpg')
   Tweet.create!(
-    comment: 'サンプル5',
+    content: 'サンプル5',
     user_id:
+  )
+end
+
+User.all.ids.sort.each do |user_id|
+  Favorite.create!(
+    tweet_id: Tweet.first.id,
+    user_id:
+  )
+end
+
+User.all.ids.sort.each do |user_id|
+  Retweet.create!(
+    tweet_id: Tweet.last.id,
+    user_id:
+  )
+end
+
+User.all.ids.sort.each do |user_id|
+  Comment.create!(
+    tweet_id: Tweet.first.id,
+    user_id: ,
+    sentence: 'SEEDで投入したサンプル文'
   )
 end

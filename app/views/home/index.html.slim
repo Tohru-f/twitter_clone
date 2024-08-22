@@ -1,43 +1,5 @@
 body
-  nav
-    ul
-      li  = image_tag('logo-white.png', size: '26x26')
-    ul
-      li  = image_tag('house.png', size: '30x30')
-      li.logo_name  = link_to 'ホーム', root_path, class: 'link'
-    ul
-      li  = image_tag('search.png', size: '30x30')
-      li.logo_name  = '話題を検索'
-    ul
-      li  = image_tag('notification.png', size: '30x30')
-      li.logo_name  = '通知'
-    ul
-      li  = image_tag('mail.png', size: '30x30')
-      li.logo_name  = 'メッセージ'
-    ul
-      li  = image_tag('box.png', size: '30x30')
-      li.logo_name  = 'Grok'
-    ul
-      li  = image_tag('list.png', size: '30x30')
-      li.logo_name  = 'リスト'
-    ul
-      li  = image_tag('bookmark.png', size: '30x30')
-      li.logo_name  = 'ブックマーク'
-    ul
-      li  = image_tag('community.png', size: '30x30')
-      li.logo_name  = 'コミュニティ'
-    ul
-      li  = image_tag('logo-white.png', size: '23x23')
-      li.logo_name  = 'プレミアム'
-    ul
-      li  = image_tag('lightning.png', size: '30x30')
-      li.logo_name  = '認証済み組織'
-    ul
-      li  = image_tag('profile.png', size: '30x30')
-      li.logo_name  = 'プロフィール'
-    ul
-      li  = image_tag('more.png', size: '30x30')
-      li.logo_name  = 'もっと見る'
+  = render partial: "layouts/nav"
 
   .tabs
     ul.nav.nav-tabs.nav-fill.sticky-top.blur-bg
@@ -50,9 +12,14 @@ body
 
     .tweet
       = form_with model: @tweet, url: home_index_path, local: true do |f|
-        .form-group
-          = f.label :comment, Tweet.human_attribute_name(:comment)
-          = f.text_field :comment, class: 'form-control', placeholder: 'いまどうしてる？'
+        ul
+          li
+            - if user_signed_in?
+              - if current_user.icon.attached?
+                = link_to image_tag(current_user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), user_path(current_user.id)
+          li
+            .form-group
+              = f.text_field :comment, placeholder: 'いまどうしてる？', class: "form-group form-control", style: "border: none"
         = f.label :image do
           = image_tag('photo.png', size: '35x35', class: 'image')
           = f.file_field :image, style: 'display:none', multiple: true
@@ -65,10 +32,10 @@ body
           ul
             li #{tweet.user.name}
             li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-          p = tweet.comment
+          p = tweet.content
           - if tweet.images.attached?
             = image_tag tweet.images[0], size: '250x200'
-        = paginate @tweets, :param_name => 'recmmend', params: {tab: 'recommend'}, theme: 'twitter-bootstrap-4'
+        = paginate @tweets, :param_name => 'recommend', params: {tab: 'recommend'}, theme: 'twitter-bootstrap-4'
         
       div class="#{'show active' if params[:tab] == 'follow'} tab-pane fade " id="following"
         - if current_user
@@ -76,7 +43,7 @@ body
             ul
               li #{tweet.user.name}
               li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-            p = tweet.comment
+            p = tweet.content
             - if tweet.images.attached?
               = image_tag tweet.images[0], size: '250x200'
           = paginate @followers_tweets, :param_name => 'follow', params: {tab: 'follow'}, theme: 'twitter-bootstrap-4'

@@ -2,6 +2,9 @@
 
 class Tweet < ApplicationRecord
   belongs_to :user
-  validates :comment, presence: true
+  validates :content, presence: true
   has_many_attached :images
+  has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :retweets, dependent: :destroy
 end
