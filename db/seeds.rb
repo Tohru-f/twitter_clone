@@ -10,7 +10,7 @@
 user1 = User.create!(
   email: 'ryoma@gmail.com',
   phone_number: '090-1234-5678',
-  birthday: 18360103,
+  birthday: 18_360_103,
   name: '坂本 竜馬',
   password: 'password',
   confirmed_at: Time.zone.today,
@@ -18,13 +18,15 @@ user1 = User.create!(
   place: '土佐藩(現高知県出身)',
   website: 'https://www.google.co.jp'
 )
-user1.icon.attach(io: File.open(Rails.root.join('app/assets/images/Sakamoto_Ryoma.jpg')), filename: 'Sakamoto_Ryoma.jpg')
-user1.header.attach(io: File.open(Rails.root.join('app/assets/images/kumiaikakunikikyo.jpg')), filename: 'kumiaikakunikikyo.jpg')
+user1.icon.attach(io: File.open(Rails.root.join('app/assets/images/Sakamoto_Ryoma.jpg')),
+                  filename: 'Sakamoto_Ryoma.jpg')
+user1.header.attach(io: File.open(Rails.root.join('app/assets/images/kumiaikakunikikyo.jpg')),
+                    filename: 'kumiaikakunikikyo.jpg')
 
 user2 = User.create!(
   email: 'hanpeita@yahoo.co.jp',
   phone_number: '070-1234-5678',
-  birthday: 18291024,
+  birthday: 18_291_024,
   name: '武市 半平太',
   password: 'password',
   confirmed_at: Time.zone.today,
@@ -32,13 +34,15 @@ user2 = User.create!(
   place: '土佐藩(現高知県出身)',
   website: 'https://www.yahoo.co.jp'
 )
-user2.icon.attach(io: File.open(Rails.root.join('app/assets/images/Takechi_Hanpeita.jpg')), filename: 'Takechi_Hanpeita.jpg')
-user2.header.attach(io: File.open(Rails.root.join('app/assets/images/marunikakinohana.jpg')), filename: 'marunikakinohana.jpg')
+user2.icon.attach(io: File.open(Rails.root.join('app/assets/images/Takechi_Hanpeita.jpg')),
+                  filename: 'Takechi_Hanpeita.jpg')
+user2.header.attach(io: File.open(Rails.root.join('app/assets/images/marunikakinohana.jpg')),
+                    filename: 'marunikakinohana.jpg')
 
 user3 = User.create!(
   email: 'izo@hotmail.com',
   phone_number: '080-1234-5678',
-  birthday: 18380214,
+  birthday: 18_380_214,
   name: '岡田 以蔵',
   password: 'password',
   confirmed_at: Time.zone.today,
@@ -47,12 +51,13 @@ user3 = User.create!(
   website: 'https://www.microsoft.com/ja-jp/'
 )
 user3.icon.attach(io: File.open(Rails.root.join('app/assets/images/Okada_Izo.jpg')), filename: 'Okada_Izo.jpg')
-user3.header.attach(io: File.open(Rails.root.join('app/assets/images/maruninarabikine.png')), filename: 'maruninarabikine.png')
+user3.header.attach(io: File.open(Rails.root.join('app/assets/images/maruninarabikine.png')),
+                    filename: 'maruninarabikine.png')
 
 user4 = User.create!(
   email: 'shintaro@mocha.ocn.ne.jp',
   phone_number: '050-1234-5678',
-  birthday: 18380506,
+  birthday: 18_380_506,
   name: '中岡 慎太郎',
   password: 'password',
   confirmed_at: Time.zone.today,
@@ -60,8 +65,10 @@ user4 = User.create!(
   place: '土佐藩(現高知県出身)',
   website: 'https://www.ocn.ne.jp'
 )
-user4.icon.attach(io: File.open(Rails.root.join('app/assets/images/Nakaoka_Shintaro.jpg')), filename: 'Nakaoka_Shintaro.jpg')
-user4.header.attach(io: File.open(Rails.root.join('app/assets/images/maruniwatanohana.gif')), filename: 'maruniwatanohana.gif')
+user4.icon.attach(io: File.open(Rails.root.join('app/assets/images/Nakaoka_Shintaro.jpg')),
+                  filename: 'Nakaoka_Shintaro.jpg')
+user4.header.attach(io: File.open(Rails.root.join('app/assets/images/maruniwatanohana.gif')),
+                    filename: 'maruniwatanohana.gif')
 
 follower1 = Follower.create!(
   user_id: user2.id
@@ -135,26 +142,17 @@ User.all.ids.sort.each do |user_id|
     content: 'サンプル5',
     user_id:
   )
-end
-
-User.all.ids.sort.each do |user_id|
   Favorite.create!(
     tweet_id: Tweet.first.id,
     user_id:
   )
-end
-
-User.all.ids.sort.each do |user_id|
   Retweet.create!(
     tweet_id: Tweet.last.id,
     user_id:
   )
-end
-
-User.all.ids.sort.each do |user_id|
   Comment.create!(
     tweet_id: Tweet.first.id,
-    user_id: ,
+    user_id:,
     sentence: 'SEEDで投入したサンプル文'
   )
 end

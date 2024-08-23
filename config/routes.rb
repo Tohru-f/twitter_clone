@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   resources :users, only: :show
 
   resources :tweets do
-    resources :favorites, only: [:create, :destroy]
-    resources :comments, only: [:create, :destroy, :edit]
+    resources :favorites, only: %i[create destroy]
+    resources :comments, only: %i[create destroy edit]
   end
 
   mount LetterOpenerWeb::Engine, at: 'letter_opener' if Rails.env.development?
