@@ -1,0 +1,18 @@
+.header {
+  width: calc(100% - 300px);
+  height: 300px;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+  left: 330px;
+  top: 150px;
+}
+
+.space {
+  padding-right: 5px;
+}

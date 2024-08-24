@@ -8,6 +8,12 @@ class User < ApplicationRecord
   validates :uid, uniqueness: { scope: :provider }, if: -> { uid.present? }
   has_many :relations, dependent: :destroy
   has_many :followers, through: :relations
+  has_one_attached :icon
+  has_one_attached :header
+  has_many :tweets, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :retweets, dependent: :destroy
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

@@ -52,6 +52,28 @@ ul.nav.nav-tabs {
   width: 100%
 }
 
+.tweet ul {
+  list-style: none;
+  display: flex;
+  padding-left: 0px;
+}
+
+.tweet .form-group {
+  width: 1230px;
+  background-color: black;
+  color: white;
+}
+
 .tweet .image {
   cursor: pointer;
+}
+
+.logo_name {
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+}
+
+.icon_image {
+  border-radius: 50%;
 }

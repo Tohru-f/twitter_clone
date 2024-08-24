@@ -1,15 +1,86 @@
-h2
-  | Users
-hr
-p
-  strong
-    | ユーザー名
-  = @user.name
+body
+  = render partial: "layouts/nav"
+  
+  h2
+    = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), home_index_path
+    = @user.name
+  hr
+
+  .relative
+    p = image_tag(current_user.header, class: "header")
+    p = image_tag(current_user.icon, class: "icon_image absolute", size: "240x240")
+
+  br
+  br
+  br
+  br
+
   p
-    p
-      strong
-        | e-mail
-      = @user.email
-    = form_with local: true do |form|
-      p
-        = form.submit "ポストする", class: "btn btn-primary rounded-pill"
+    strong
+      = @user.name
+
+  p = @user.profile
+
+  = image_tag("location.png", size: "15x15")
+  span.space
+    = @user.place
+  = image_tag("link.png", size: "15x15")
+  span.space
+    = text_url_to_link(@user.website).html_safe
+  = image_tag("cake.png", size: "15x15")
+  | 誕生日: 
+  span.space
+    = @user.birthday.strftime('%Y年%m月%d日')
+
+  .tabs
+    ul.nav.nav-tabs.nav-fill.sticky-top.blur-bg
+      li.nav-item
+        div class="#{'active' if params[:tab] == 'tweet'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#tweet"
+          = link_to 'ツイート', user_path(@user.id, tab: 'tweet'), class: 'link'
+      li.nav-item
+        div class="#{'active' if params[:tab] == 'favorite'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#favorite"
+          = link_to 'いいね', user_path(@user.id, tab: 'favorite'), class: 'link'
+      li.nav-item
+        div class="#{'active' if params[:tab] == 'retweet'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#retweet"
+          = link_to 'リツイート', user_path(@user.id, tab: 'retweet'), class: 'link'
+      li.nav-item
+        div class="#{'active' if params[:tab] == 'comment'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#comment"
+          = link_to 'コメント', user_path(@user.id, tab: 'comment'), class: 'link'
+
+    .tab-content
+      div class="#{'show active' if params[:tab] == 'tweet'} tab-pane fade " id="tweet"
+        - @tweets.each do |tweet|
+          ul
+            li 投稿者： #{tweet.user.name}
+            li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+          p = tweet.content
+          - if tweet.images.attached?
+            = image_tag tweet.images[0], size: '250x200'
+        
+      div class="#{'show active' if params[:tab] == 'favorite'} tab-pane fade " id="favorite"
+        - @favorites.to_a.each do |favorite|
+          ul
+            li 投稿者： #{favorite.tweet.user.name}
+            li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+          p = favorite.tweet.content
+          - if favorite.tweet.images.attached?
+            = image_tag favorite.images[0], size: '250x200'
+
+      div class="#{'show active' if params[:tab] == 'retweet'} tab-pane fade " id="retweet"
+        - @retweets.each do |retweet|
+          ul
+            li 投稿者： #{retweet.tweet.user.name}
+            li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+          p = retweet.tweet.content
+          - if retweet.tweet.images.attached?
+            = image_tag retweet.tweet.images[0], size: '250x200'
+
+      div class="#{'show active' if params[:tab] == 'comment'} tab-pane fade " id="comment"
+        - @comments.each do |comment|
+          ul
+            li 投稿者： #{comment.tweet.user.name}
+            li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+          p = comment.tweet.content
+          - if comment.tweet.images.attached?
+            = image_tag comment.tweet.images[0], size: '250x200'
+
