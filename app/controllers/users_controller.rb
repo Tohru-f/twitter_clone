@@ -3,10 +3,10 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(current_user.id)
-    @favorites = Favorite.includes(tweet: [:user, { images_attachments: :blob }]).where(user_id: @user.id)
-    @retweets = Retweet.includes(tweet: [:user, { images_attachments: :blob }]).where(user_id: @user.id)
-    @comments = Comment.includes(tweet: [:user, { images_attachments: :blob }]).where(user_id: @user.id)
-    @tweets = Tweet.includes(:user, { images_attachments: :blob }).where(user_id: @user.id)
+    @favorites = @user.favorites.includes(tweet: { images_attachments: :blob })
+    @retweets = @user.retweets.includes(tweet: { images_attachments: :blob })
+    @comments = @user.comments.includes(tweet: { images_attachments: :blob })
+    @tweets = @user.tweets.includes(images_attachments: :blob)
   end
 
   def update
