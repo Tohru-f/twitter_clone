@@ -1,0 +1,29 @@
+.px-4.px-lg-5.mt-5
+  .row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center
+    h1
+      | プロフィール編集画面
+    = form_with model: @user, url: "/users/#{current_user.id}", local: true do |f|
+      .form-group
+        = f.label :name, User.human_attribute_name(:name)
+        = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label :profile, User.human_attribute_name(:profile)
+        = f.text_area :profile, row: 1, class: 'form-control'
+      .form-group
+        = f.label :place, User.human_attribute_name(:place)
+        = f.text_field :place, class: 'form-control'
+      .form-group
+        = f.label :website, User.human_attribute_name(:website)
+        = f.text_area :website, row:1, class: 'form-control'
+      .form-group
+        = f.label :birthday, User.human_attribute_name(:birthday)
+        = f.text_field :birthday, class: 'form-control'
+      .form-group
+        = f.label :icon, User.human_attribute_name(:icon)
+        = f.file_field :icon, class: 'form-control file-size'
+        = image_tag(current_user.icon, class: "icon_image", size: "100x100")
+      .form-group
+        = f.label :header, User.human_attribute_name(:header)
+        = f.file_field :header, class: 'form-control file-size'
+        = image_tag(current_user.header, size: "100x100")
+      = f.submit '更新する', class: 'btn btn-primary'

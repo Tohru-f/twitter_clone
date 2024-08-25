@@ -9,6 +9,7 @@ body
   .relative
     p = image_tag(current_user.header, class: "header")
     p = image_tag(current_user.icon, class: "icon_image absolute", size: "240x240")
+    = link_to 'プロフィールを編集', edit_user_path(current_user.id), class: "edit"
 
   br
   br

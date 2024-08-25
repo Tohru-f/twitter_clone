@@ -32,6 +32,13 @@ ja:
         unconfirmed_email: 未確認Eメール
         unlock_token: ロック解除用トークン
         updated_at: 更新日
+        place: 場所
+        profile: 自己紹介
+        website: ウェブサイト
+        name: 名前
+        birthday: 誕生日
+        icon: アイコン画像
+        header: ヘッダー画像
       tweet:
         comment: コメント
         created_at: 投稿日
