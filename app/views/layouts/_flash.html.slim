@@ -4,3 +4,8 @@
 - elsif flash[:alert]
   p.alert.alert-danger
     = alert
+- if @tweet && @tweet.errors.any?
+  .alert.alert-danger
+    ul
+      - @tweet.errors.full_messages.each do |message|
+        li = message      

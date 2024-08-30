@@ -1,37 +1,38 @@
 body
   = render partial: "layouts/nav"
   
-  h2
-    = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), home_index_path
-    = @user.name
-  hr
-
-  .relative
-    p = image_tag(current_user.header, class: "header")
-    p = image_tag(current_user.icon, class: "icon_image absolute", size: "240x240")
-    = link_to 'プロフィールを編集', edit_user_path(current_user.id), class: "edit"
-
-  br
-  br
-  br
-  br
-
-  p
-    strong
+  .frame
+    h2
+      = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), home_index_path
       = @user.name
+    br
 
-  p = @user.profile
+    .relative
+      p = image_tag(current_user.header, class: "header")
+      p = image_tag(current_user.icon, class: "icon_image absolute", size: "240x240")
+      = link_to 'プロフィールを編集', edit_user_path(current_user.id), class: "edit"
 
-  = image_tag("location.png", size: "15x15")
-  span.space
-    = @user.place
-  = image_tag("link.png", size: "15x15")
-  span.space
-    = text_url_to_link(@user.website).html_safe
-  = image_tag("cake.png", size: "15x15")
-  | 誕生日: 
-  span.space
-    = @user.birthday.strftime('%Y年%m月%d日')
+    br
+    br
+    br
+    br
+
+    p
+      strong
+        = @user.name
+
+    p = @user.profile
+
+    = image_tag("location.png", size: "15x15")
+    span.space
+      = @user.place
+    = image_tag("link.png", size: "15x15")
+    span.space
+      = text_url_to_link(@user.website).html_safe
+    = image_tag("cake.png", size: "15x15")
+    | 誕生日: 
+    span.space
+      = @user.birthday.strftime('%Y年%m月%d日')
 
   .tabs
     ul.nav.nav-tabs.nav-fill.sticky-top.blur-bg
@@ -52,36 +53,52 @@ body
       div class="#{'show active' if params[:tab] == 'tweet'} tab-pane fade " id="tweet"
         - @tweets.each do |tweet|
           ul
-            li 投稿者： #{tweet.user.name}
+            li
+              = image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
+            li #{tweet.user.name}
             li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
           p = tweet.content
           - if tweet.images.attached?
-            = image_tag tweet.images[0], size: '250x200'
+            - tweet.images.each do |tweet_image|
+              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          hr
         
       div class="#{'show active' if params[:tab] == 'favorite'} tab-pane fade " id="favorite"
         - @favorites.to_a.each do |favorite|
           ul
-            li 投稿者： #{favorite.tweet.user.name}
+            li
+              = image_tag(favorite.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
+            li #{favorite.tweet.user.name}
             li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
           p = favorite.tweet.content
           - if favorite.tweet.images.attached?
-            = image_tag favorite.images[0], size: '250x200'
+            - favorite.tweet.images.each do |tweet_image|
+              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          hr
 
       div class="#{'show active' if params[:tab] == 'retweet'} tab-pane fade " id="retweet"
         - @retweets.each do |retweet|
           ul
-            li 投稿者： #{retweet.tweet.user.name}
+            li
+              = image_tag(retweet.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
+            li #{retweet.tweet.user.name}
             li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
           p = retweet.tweet.content
           - if retweet.tweet.images.attached?
-            = image_tag retweet.tweet.images[0], size: '250x200'
+            - retweet.tweet.images.each do |tweet_image|
+              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          hr
 
       div class="#{'show active' if params[:tab] == 'comment'} tab-pane fade " id="comment"
         - @comments.each do |comment|
           ul
-            li 投稿者： #{comment.tweet.user.name}
+            li
+              = image_tag(comment.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
+            li #{comment.tweet.user.name}
             li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
           p = comment.tweet.content
           - if comment.tweet.images.attached?
-            = image_tag comment.tweet.images[0], size: '250x200'
+            - comment.tweet.images.each do |tweet_image|
+              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          hr
 

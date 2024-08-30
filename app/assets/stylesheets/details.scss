@@ -1,5 +1,12 @@
-.header {
+
+.frame {
+  float: right;
   width: calc(100% - 300px);
+  border-left: solid 1px #a9a9a9;
+}
+
+.header {
+  width: 100%;
   height: 300px;
 }
 
@@ -9,7 +16,7 @@
 
 .absolute {
   position: absolute;
-  left: 330px;
+  left: 30px;
   top: 150px;
 }
 
@@ -26,4 +33,32 @@
   border: solid 1px #a9a9a9;
   border-radius: 100px;
   padding: 10px;
+}
+
+.tab-content {
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+}
+
+.tabs ul {
+  margin-bottom: 16px;
+}
+
+.tab-content ul {
+  padding-left: 16px;
+}
+
+.tab-content ul li {
+  display: inline-block;
+  list-style: none;
+  padding-right: 10px;
+}
+
+.tab-content p {
+  padding-left: 70px;
+}
+
+.tab-content .tweet_image {
+  margin-left: 70px;
 }

@@ -11,7 +11,7 @@ body
           = link_to 'フォロー中', home_index_path(tab: 'follow'), class: 'link'
 
     .tweet
-      = form_with model: @tweet, url: home_index_path, local: true do |f|
+      = form_with model: @tweet, scope: :tweet, url: { controller:'home', action: 'create' }, local: true, data: { turbo: false } do |f|
         ul
           li
             - if user_signed_in?
@@ -19,10 +19,10 @@ body
                 = link_to image_tag(current_user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), user_path(current_user.id)
           li
             .form-group
-              = f.text_field :comment, placeholder: 'いまどうしてる？', class: "form-group form-control", style: "border: none"
-        = f.label :image do
+              = f.text_field :content, placeholder: 'いまどうしてる？', class: "form-group form-control", style: "border: none"
+        = f.label :images do
           = image_tag('photo.png', size: '35x35', class: 'image')
-          = f.file_field :image, style: 'display:none', multiple: true
+          = f.file_field :images, style: 'display:none', multiple: true
         end
         = f.submit 'ポストする', class: 'btn btn-primary'
 
@@ -30,22 +30,30 @@ body
       div class="#{'show active' if params[:tab] == 'recommend'} tab-pane fade " id="for-you"
         - @tweets.each do |tweet|
           ul
+            li
+              = image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
             li #{tweet.user.name}
             li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
           p = tweet.content
           - if tweet.images.attached?
-            = image_tag tweet.images[0], size: '250x200'
+            - tweet.images.each do |tweet_image|
+              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          hr
         = paginate @tweets, :param_name => 'recommend', params: {tab: 'recommend'}, theme: 'twitter-bootstrap-4'
-        
+
       div class="#{'show active' if params[:tab] == 'follow'} tab-pane fade " id="following"
         - if current_user
           - @followers_tweets.each do |tweet|
             ul
+              li
+                = image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
               li #{tweet.user.name}
               li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
             p = tweet.content
             - if tweet.images.attached?
-              = image_tag tweet.images[0], size: '250x200'
+              - tweet.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+            hr
           = paginate @followers_tweets, :param_name => 'follow', params: {tab: 'follow'}, theme: 'twitter-bootstrap-4'
         - else
           p ログインしていません

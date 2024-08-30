@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create destroy edit]
   end
 
+  resources :home, only: %i[index new create]
+
   mount LetterOpenerWeb::Engine, at: 'letter_opener' if Rails.env.development?
 
   # Defines the root path route ("/")
