@@ -11,7 +11,7 @@ body
           = link_to 'フォロー中', home_index_path(tab: 'follow'), class: 'link'
 
     .tweet
-      = form_with model: @tweet, scope: :tweet, url: { controller:'home', action: 'create' }, local: true, data: { turbo: false } do |f|
+      = form_with model: @tweet, scope: :tweet, url: { controller:'tweets', action: 'create' }, local: true, data: { turbo: false } do |f|
         ul
           li
             - if user_signed_in?
@@ -31,8 +31,8 @@ body
         - @tweets.each do |tweet|
           ul
             li
-              = image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
-            li #{tweet.user.name}
+              = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
+            li = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
             li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
           p = tweet.content
           - if tweet.images.attached?
@@ -46,8 +46,8 @@ body
           - @followers_tweets.each do |tweet|
             ul
               li
-                = image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50')
-              li #{tweet.user.name}
+                = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
+              li = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
               li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
             p = tweet.content
             - if tweet.images.attached?

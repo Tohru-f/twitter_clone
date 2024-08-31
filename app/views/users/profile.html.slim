@@ -8,9 +8,8 @@ body
     br
 
     .relative
-      p = image_tag(current_user.header, class: "header")
-      p = image_tag(current_user.icon, class: "icon_image absolute", size: "240x240")
-      = link_to 'プロフィールを編集', edit_user_path(current_user.id), class: "edit"
+      p = image_tag(@user.header, class: "header")
+      p = image_tag(@user.icon, class: "icon_image absolute", size: "240x240")
 
     br
     br
@@ -27,7 +26,7 @@ body
     span.space
       = @user.place
     = image_tag("link.png", size: "15x15")
-    span.space.link
+    span.space
       = text_url_to_link(@user.website).html_safe
     = image_tag("cake.png", size: "15x15")
     | 誕生日: 
@@ -38,16 +37,16 @@ body
     ul.nav.nav-tabs.nav-fill.sticky-top.blur-bg
       li.nav-item
         div class="#{'active' if params[:tab] == 'tweet'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#tweet"
-          = link_to 'ツイート', user_path(@user.id, tab: 'tweet'), class: 'link'
+          = link_to 'ツイート', profile_path(@user.id, tab: 'tweet'), class: 'link'
       li.nav-item
         div class="#{'active' if params[:tab] == 'favorite'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#favorite"
-          = link_to 'いいね', user_path(@user.id, tab: 'favorite'), class: 'link'
+          = link_to 'いいね', profile_path(@user.id, tab: 'favorite'), class: 'link'
       li.nav-item
         div class="#{'active' if params[:tab] == 'retweet'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#retweet"
-          = link_to 'リツイート', user_path(@user.id, tab: 'retweet'), class: 'link'
+          = link_to 'リツイート', profile_path(@user.id, tab: 'retweet'), class: 'link'
       li.nav-item
         div class="#{'active' if params[:tab] == 'comment'} text-center hover-bg py-3 px-2" type="button" data-bs-toggle="tab" data-bs-target="#comment"
-          = link_to 'コメント', user_path(@user.id, tab: 'comment'), class: 'link'
+          = link_to 'コメント', profile_path(@user.id, tab: 'comment'), class: 'link'
 
     .tab-content
       div class="#{'show active' if params[:tab] == 'tweet'} tab-pane fade " id="tweet"
