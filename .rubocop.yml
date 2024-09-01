@@ -22,7 +22,9 @@ Layout/LineLength:
     - config/initializers/devise.rb
     - db/migrate/*.rb
     - app/controllers/home_controller.rb
+    - app/controllers/tweets_controller.rb
 Hc/RailsSpecificActionName:
   Exclude:
     - app/controllers/users/omniauth_callbacks_controller.rb
     - app/controllers/application_controller.rb
+    - app/controllers/users_controller.rb

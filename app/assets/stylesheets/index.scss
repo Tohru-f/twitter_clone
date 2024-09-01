@@ -4,10 +4,6 @@ body {
 }
 
 nav {
-  border: solid 1px #a9a9a9;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
   width: 300px;
   float: left;
 }
@@ -23,6 +19,7 @@ nav ul li {
 .tabs {
   float: right;
   width: calc(100% - 300px);
+  border-left: solid 1px #a9a9a9;
 }
 
 ul.nav.nav-tabs {
@@ -30,15 +27,40 @@ ul.nav.nav-tabs {
   flex-wrap: wrap;
 }
 
-.tab_content {
-  float: right;
-  color: white;
+#for-you ul {
+  padding-left: 16px;
 }
 
-.tab_content ul li {
+#for-you ul li {
   display: inline-block;
   list-style: none;
-  color: white;
+  padding-right: 10px;
+}
+
+#for-you p {
+  padding-left: 70px;
+}
+
+#for-you .tweet_image {
+  margin-left: 70px;
+}
+
+#following ul {
+  padding-left: 16px;
+}
+
+#following ul li {
+  display: inline-block;
+  list-style: none;
+  padding-right: 10px;
+}
+
+#following p {
+  padding-left: 70px;
+}
+
+#following .tweet_image {
+  margin-left: 70px;
 }
 
 .link {
@@ -49,13 +71,18 @@ ul.nav.nav-tabs {
 .tweet {
   color: white;
   border-bottom: solid 1px #a9a9a9;
-  width: 100%
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .tweet ul {
   list-style: none;
   display: flex;
   padding-left: 0px;
+}
+
+.tweet ul li {
+  padding-left: 16px;
 }
 
 .tweet .form-group {
@@ -77,3 +104,4 @@ ul.nav.nav-tabs {
 .icon_image {
   border-radius: 50%;
 }
+

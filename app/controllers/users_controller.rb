@@ -20,9 +20,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def profile
+    @user = User.find(params[:format])
+    @favorites = @user.favorites.includes(tweet: { images_attachments: :blob })
+    @retweets = @user.retweets.includes(tweet: { images_attachments: :blob })
+    @comments = @user.comments.includes(tweet: { images_attachments: :blob })
+    @tweets = @user.tweets.includes(images_attachments: :blob)
+  end
+
   private
 
   def set_user
+    return unless current_user
+
     @user = User.find(current_user.id)
   end
 

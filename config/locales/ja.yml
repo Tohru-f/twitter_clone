@@ -42,6 +42,7 @@ ja:
       tweet:
         comment: コメント
         created_at: 投稿日
+        content: 投稿内容
     models:
       user: ユーザー
   devise:
