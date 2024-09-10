@@ -52,53 +52,65 @@ body
     .tab-content
       div class="#{'show active' if params[:tab] == 'tweet'} tab-pane fade " id="tweet"
         - @tweets.each do |tweet|
-          ul
-            li
-              = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
-            li = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
-            li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-          p = tweet.content
-          - if tweet.images.attached?
-            - tweet.images.each do |tweet_image|
-              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          = link_to tweet_path(tweet.id) do
+            ul
+              li
+                object = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
+              li 
+                object = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
+              li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            p = tweet.content
+            - if tweet.images.attached?
+              - tweet.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          end
           hr
         
       div class="#{'show active' if params[:tab] == 'favorite'} tab-pane fade " id="favorite"
-        - @favorites.to_a.each do |favorite|
-          ul
-            li
-              = link_to image_tag(favorite.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(favorite.tweet.user.id)
-            li = link_to favorite.tweet.user.name, profile_path(favorite.tweet.user.id), class: 'link'
-            li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-          p = favorite.tweet.content
-          - if favorite.tweet.images.attached?
-            - favorite.tweet.images.each do |tweet_image|
-              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+        - @favorites.each do |favorite|
+          = link_to tweet_path(favorite.tweet_id) do
+            ul
+              li
+                object = link_to image_tag(favorite.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(favorite.tweet.user.id)
+              li 
+                object = link_to favorite.tweet.user.name, profile_path(favorite.tweet.user.id), class: 'link'
+              li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            p = favorite.tweet.content
+            - if favorite.tweet.images.attached?
+              - favorite.tweet.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          end
           hr
 
       div class="#{'show active' if params[:tab] == 'retweet'} tab-pane fade " id="retweet"
         - @retweets.each do |retweet|
-          ul
-            li
-              = link_to image_tag(retweet.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(retweet.tweet.user.id)
-            li = link_to retweet.tweet.user.name, profile_path(retweet.tweet.user.id), class: 'link'
-            li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-          p = retweet.tweet.content
-          - if retweet.tweet.images.attached?
-            - retweet.tweet.images.each do |tweet_image|
-              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          = link_to tweet_path(retweet.tweet_id)
+            ul
+              li
+                object = link_to image_tag(retweet.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(retweet.tweet.user.id)
+              li 
+                object = link_to retweet.tweet.user.name, profile_path(retweet.tweet.user.id), class: 'link'
+              li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            p = retweet.tweet.content
+            - if retweet.tweet.images.attached?
+              - retweet.tweet.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          end
           hr
 
       div class="#{'show active' if params[:tab] == 'comment'} tab-pane fade " id="comment"
         - @comments.each do |comment|
-          ul
-            li
-              = link_to image_tag(comment.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(comment.tweet.user.id)
-            li = link_to comment.tweet.user.name, profile_path(comment.tweet.user.id), class: 'link'
-            li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-          p = comment.tweet.content
-          - if comment.tweet.images.attached?
-            - comment.tweet.images.each do |tweet_image|
-              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          = link_to tweet_path(comment.tweet_id)
+            ul
+              li
+                object = link_to image_tag(comment.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(comment.tweet.user.id)
+              li 
+                object = link_to comment.tweet.user.name, profile_path(comment.tweet.user.id), class: 'link'
+              li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            p = comment.tweet.content
+            - if comment.tweet.images.attached?
+              - comment.tweet.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          end
           hr
 

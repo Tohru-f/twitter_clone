@@ -3,6 +3,16 @@
 class TweetsController < ApplicationController
   before_action :set_user, only: %i[create]
 
+  def show
+    @tweet = Tweet.includes(images_attachments: :blob).find(params[:id])
+    @comments = @tweet.comments.includes(user: { icon_attachment: :blob }, images_attachments: :blob)
+    @replies = {}
+    @comments.each do |comment|
+      @replies[comment.id] = Comment.where(parent_id: comment.id) if Comment.where(parent_id: comment.id).present?
+    end
+    # binding.pry
+  end
+
   def new
     @tweet = Tweet.new
   end

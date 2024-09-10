@@ -1,0 +1,73 @@
+body .comment-frame {
+  width: 1000px;
+}
+
+.frame-box {
+  float: right;
+  width: calc(100% - 300px);
+  border-left: solid 1px #a9a9a9;
+}
+
+.frame-box ul {
+  list-style: none;
+  display: flex;
+  padding-left: 16px;
+  margin-bottom: 0px;
+}
+
+.frame-box ul li {
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.comment .form-group {
+  width: 1000px;
+  background-color: black;
+  color: white;
+}
+
+.reply {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  float: right;
+  margin-right: 30px;
+  border-radius: 100px;
+  padding: 5px 10px;
+}
+
+.comment .image {
+  cursor: pointer;
+  margin-left: 75px;
+}
+
+.frame-box p {
+  padding-left: 16px;
+}
+
+.frame-box .tweet_image {
+  padding-left: 16px;
+}
+
+.comment-view p {
+  padding-left: 75px;
+}
+
+.comment-view .tweet_image {
+  margin-left: 59px;
+}
+
+.reply-box {
+  display: flex;
+}
+
+.reply-space {
+  width: 39px;
+  height: auto;
+}
+
+.comment-view span {
+  display: inline-block;
+  margin-bottom: 16px;
+}

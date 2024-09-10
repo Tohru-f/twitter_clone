@@ -1,0 +1,83 @@
+body.comment-frame
+  = render partial: "layouts/nav"
+  
+  .frame-box
+    h2
+      = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), 'javascript:history.back()'
+      | ポストする
+    br
+
+    ul
+      li
+        = link_to image_tag(@tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(@tweet.user.id)
+      li
+        = link_to @tweet.user.name, profile_path(@tweet.user.id)
+    p = @tweet.content
+    - if @tweet.images.attached?
+      - @tweet.images.each do |tweet_image|
+        = image_tag tweet_image, size: '250x200', class: "tweet_image"
+    p = @tweet.created_at.strftime('%H:%M:%S %Y/%m/%d')
+    hr
+    .comment
+      = form_with model: @comment, scope: :comment, url: tweet_comments_path(@tweet), local: true, data: { turbo: false } do |f|
+        ul
+          li
+            - if user_signed_in?
+              - if current_user.icon.attached?
+                = link_to image_tag(current_user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), user_path(current_user.id)
+          li
+            .form-group
+              = f.text_field :sentence, placeholder: '返信をポスト', class: "form-group form-control", style: "border: none"
+        = f.label :images do
+          = image_tag('photo.png', size: '35x35', class: 'image')
+          = f.file_field :images, style: 'display:none', multiple: true
+        end
+        = f.submit '返信', class: 'reply btn btn-primary'
+      hr
+    .comment-view
+      - if @comments
+        - @comments.each do |comment|
+          - if not @replies.values.flatten.map(&:sentence).include?(comment.sentence)
+            = link_to comment_path(comment.id) do
+              ul
+                li
+                  object = link_to image_tag(comment.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(comment.user.id)
+                li
+                  object = link_to comment.user.name, profile_path(comment.user.id)
+                li 投稿日： #{comment.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if not @replies[comment.id].present?
+                p = comment.sentence
+              - else
+                .reply-box
+                  .reply-space
+                  .reply-line style="background-color: #a9a9a9; width: 1px;"
+                  .reply-space
+                  span = comment.sentence
+              - if comment.images.attached?
+                - comment.images.each do |tweet_image|
+                    = image_tag tweet_image, size: '250x200', class: "tweet_image"
+              - if @replies[comment.id].present?
+                - @replies[comment.id].each do |reply|
+                  = link_to comment_path(reply.id) do
+                    ul
+                      li
+                        object = link_to image_tag(reply.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(reply.user.id)
+                      li
+                        object = link_to reply.user.name, profile_path(reply.user.id)
+                      li 投稿日： #{reply.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+                    - if reply == @replies[comment.id].last
+                      p = reply.sentence
+                      - if reply.images.attached?
+                        - reply.images.each do |tweet_image|
+                            = image_tag tweet_image, size: '250x200', class: "tweet_image"
+                    - else
+                      .reply-box
+                        .reply-space
+                        .reply-line style="background-color: #a9a9a9; width: 1px;"
+                        .reply-space
+                        span = reply.sentence
+                      - if reply.images.attached?
+                        - reply.images.each do |tweet_image|
+                            = image_tag tweet_image, size: '250x200', class: "tweet_image"
+                  end
+            hr

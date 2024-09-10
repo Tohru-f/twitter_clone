@@ -12,6 +12,7 @@ Metrics/AbcSize:
   Max: 32
   Exclude:
     - 'db/migrate/*'
+    - 'app/controllers/comments_controller.rb'
 Metrics/BlockLength:
   Exclude:
     - config/environments/*.rb
@@ -23,6 +24,7 @@ Layout/LineLength:
     - db/migrate/*.rb
     - app/controllers/home_controller.rb
     - app/controllers/tweets_controller.rb
+    - app/controllers/comments_controller.rb
 Hc/RailsSpecificActionName:
   Exclude:
     - app/controllers/users/omniauth_callbacks_controller.rb

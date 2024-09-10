@@ -29,6 +29,7 @@ ul.nav.nav-tabs {
 
 #for-you ul {
   padding-left: 16px;
+  margin-bottom: 0px;
 }
 
 #for-you ul li {
@@ -38,7 +39,7 @@ ul.nav.nav-tabs {
 }
 
 #for-you p {
-  padding-left: 70px;
+  padding-left: 75px;
 }
 
 #for-you .tweet_image {
@@ -47,6 +48,7 @@ ul.nav.nav-tabs {
 
 #following ul {
   padding-left: 16px;
+  margin-bottom: 0px;
 }
 
 #following ul li {
@@ -56,14 +58,14 @@ ul.nav.nav-tabs {
 }
 
 #following p {
-  padding-left: 70px;
+  padding-left: 75px;
 }
 
 #following .tweet_image {
   margin-left: 70px;
 }
 
-.link {
+a:link:not(.page-link), a:visited:not(.page-link), a:hover:not(.page-link), a:active:not(.page-link) {
   text-decoration: none;
   color: white;
 }
@@ -73,6 +75,7 @@ ul.nav.nav-tabs {
   border-bottom: solid 1px #a9a9a9;
   width: 100%;
   margin-bottom: 16px;
+  padding-bottom: 16px;
 }
 
 .tweet ul {
@@ -93,6 +96,7 @@ ul.nav.nav-tabs {
 
 .tweet .image {
   cursor: pointer;
+  margin-left: 75px;
 }
 
 .logo_name {
@@ -105,3 +109,12 @@ ul.nav.nav-tabs {
   border-radius: 50%;
 }
 
+.post {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  float: right;
+  margin-right: 30px;
+  border-radius: 100px;
+  padding: 5px 10px;
+}
