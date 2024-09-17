@@ -18,10 +18,12 @@ Rails.application.routes.draw do
 
   resources :tweets do
     resources :favorites, only: %i[create destroy]
-    resources :comments, only: %i[create destroy edit]
+    resources :comments, only: %i[new create show destroy edit]
   end
 
-  resources :tweets, only: %i[new create]
+  resources :tweets, only: %i[new create show]
+
+  resources :comments, only: %i[new create show]
 
   get '/profile' => 'users#profile'
 

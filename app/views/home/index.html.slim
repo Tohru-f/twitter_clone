@@ -24,35 +24,41 @@ body
           = image_tag('photo.png', size: '35x35', class: 'image')
           = f.file_field :images, style: 'display:none', multiple: true
         end
-        = f.submit 'ポストする', class: 'btn btn-primary'
+        = f.submit 'ポストする', class: 'post btn btn-primary'
 
     .tab-content
       div class="#{'show active' if params[:tab] == 'recommend'} tab-pane fade " id="for-you"
         - @tweets.each do |tweet|
-          ul
-            li
-              = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
-            li = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
-            li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-          p = tweet.content
-          - if tweet.images.attached?
-            - tweet.images.each do |tweet_image|
-              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          = link_to tweet_path(tweet.id) do
+            ul
+              li
+                object = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
+              li 
+                object = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
+              li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            p = tweet.content
+            - if tweet.images.attached?
+              - tweet.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          end
           hr
         = paginate @tweets, :param_name => 'recommend', params: {tab: 'recommend'}, theme: 'twitter-bootstrap-4'
 
       div class="#{'show active' if params[:tab] == 'follow'} tab-pane fade " id="following"
         - if current_user
           - @followers_tweets.each do |tweet|
-            ul
-              li
-                = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
-              li = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
-              li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
-            p = tweet.content
-            - if tweet.images.attached?
-              - tweet.images.each do |tweet_image|
-                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+            = link_to tweet_path(tweet.id) do
+              ul
+                li
+                  object = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
+                li
+                  object = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
+                li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              p = tweet.content
+              - if tweet.images.attached?
+                - tweet.images.each do |tweet_image|
+                  = image_tag tweet_image, size: '250x200', class: "tweet_image"
+            end
             hr
           = paginate @followers_tweets, :param_name => 'follow', params: {tab: 'follow'}, theme: 'twitter-bootstrap-4'
         - else

@@ -1,0 +1,50 @@
+body.comment-frame
+  = render partial: "layouts/nav"
+  
+  .frame-box
+    h2
+      = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), 'javascript:history.back()'
+      | ポストする
+    br
+
+    ul
+      li
+        = link_to image_tag(@comment.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(@comment.user.id)
+      li
+        = link_to @comment.user.name, profile_path(@comment.user.id)
+    p = @comment.sentence
+    - if @comment.images.attached?
+      - @comment.images.each do |tweet_image|
+        = image_tag tweet_image, size: '250x200', class: "tweet_image"
+    p = @comment.created_at.strftime('%H:%M:%S %Y/%m/%d')
+    hr
+    .comment
+      = form_with model: @comment, scope: :comment, url: tweet_comments_path(@tweet, id: @comment.id), local: true, data: { turbo: false }, method: 'post' do |f|
+        ul
+          li
+            - if user_signed_in?
+              - if current_user.icon.attached?
+                = link_to image_tag(current_user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), user_path(current_user.id)
+          li
+            .form-group
+              = f.text_field :sentence, placeholder: '返信をポスト', class: "form-group form-control", style: "border: none", value: ''
+        = f.label :images do
+          = image_tag('photo.png', size: '35x35', class: 'image')
+          = f.file_field :images, style: 'display:none', multiple: true
+        end
+        = f.submit '返信', class: 'reply btn btn-primary'
+      hr
+    .comment-view
+      - if @comments
+        - @comments.each do |comment|
+          ul
+            li
+              = link_to image_tag(comment.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(comment.user.id)
+            li
+              = link_to comment.user.name, profile_path(comment.user.id)
+            li 投稿日： #{comment.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+          p = comment.sentence
+          - if comment.images.attached?
+            - comment.images.each do |tweet_image|
+                = image_tag tweet_image, size: '250x200', class: "tweet_image"
+          hr

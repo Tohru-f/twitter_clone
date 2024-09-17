@@ -4,10 +4,14 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update show]
 
   def show
-    @favorites = @user.favorites.includes(tweet: { images_attachments: :blob })
-    @retweets = @user.retweets.includes(tweet: { images_attachments: :blob })
-    @comments = @user.comments.includes(tweet: { images_attachments: :blob })
-    @tweets = @user.tweets.includes(images_attachments: :blob)
+    @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
+                                                  { images_attachments: :blob }]).select(:tweet_id).distinct
+    @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
+                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+    @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
+                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+    @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob })
+    # binding.pry
   end
 
   def edit; end
@@ -22,10 +26,13 @@ class UsersController < ApplicationController
 
   def profile
     @user = User.find(params[:format])
-    @favorites = @user.favorites.includes(tweet: { images_attachments: :blob })
-    @retweets = @user.retweets.includes(tweet: { images_attachments: :blob })
-    @comments = @user.comments.includes(tweet: { images_attachments: :blob })
-    @tweets = @user.tweets.includes(images_attachments: :blob)
+    @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
+                                                  { images_attachments: :blob }]).select(:tweet_id).distinct
+    @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
+                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+    @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
+                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+    @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob })
   end
 
   private
