@@ -5,13 +5,14 @@ class UsersController < ApplicationController
 
   def show
     @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                  { images_attachments: :blob }]).select(:tweet_id).distinct
+                                                  { images_attachments: :blob }, :favorites, :comments]).select(:tweet_id).distinct
+    # binding.pry
     @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
                                                 { images_attachments: :blob }]).select(:tweet_id).distinct
     @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
                                                 { images_attachments: :blob }]).select(:tweet_id).distinct
-    @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob })
-    # binding.pry
+    @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob }, :favorites,
+                                    :comments)
   end
 
   def edit; end
@@ -27,12 +28,13 @@ class UsersController < ApplicationController
   def profile
     @user = User.find(params[:format])
     @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                  { images_attachments: :blob }]).select(:tweet_id).distinct
+                                                  { images_attachments: :blob }, :favorites, :comments]).select(:tweet_id).distinct
     @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
                                                 { images_attachments: :blob }]).select(:tweet_id).distinct
     @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
                                                 { images_attachments: :blob }]).select(:tweet_id).distinct
-    @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob })
+    @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob }, :favorites,
+                                    :comments)
   end
 
   private

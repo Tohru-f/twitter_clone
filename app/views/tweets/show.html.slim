@@ -17,6 +17,19 @@ body.comment-frame
       - @tweet.images.each do |tweet_image|
         = image_tag tweet_image, size: '250x200', class: "tweet_image"
     p = @tweet.created_at.strftime('%H:%M:%S %Y/%m/%d')
+    .icons_detail
+      .comment
+        = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(@tweet.id)
+        = @tweet.comments.length
+      .repost
+        = image_tag('repost.png', size: '26x26')
+      .favorite
+        - if current_user.present? && @tweet.favorites.exists?(user: current_user)
+          = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: @tweet.id, id: @tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}
+          = @tweet.favorites.length
+        - else
+          = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: @tweet.id), data: {turbo_method: :post}
+          = @tweet.favorites.length
     hr
     .comment
       = form_with model: @comment, scope: :comment, url: tweet_comments_path(@tweet), local: true, data: { turbo: false } do |f|
