@@ -118,3 +118,21 @@ a:link:not(.page-link), a:visited:not(.page-link), a:hover:not(.page-link), a:ac
   border-radius: 100px;
   padding: 5px 10px;
 }
+
+.icons {
+  margin-left: 75px;
+  margin-top: 16px;
+  display: flex;
+}
+
+.icons .comment {
+  margin-right: 85px;
+}
+
+.icons .repost {
+  margin-right: 85px;
+}
+
+.icons .balloon {
+  margin-right: 5px;
+}

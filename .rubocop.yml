@@ -25,6 +25,7 @@ Layout/LineLength:
     - app/controllers/home_controller.rb
     - app/controllers/tweets_controller.rb
     - app/controllers/comments_controller.rb
+    - app/controllers/users_controller.rb
 Hc/RailsSpecificActionName:
   Exclude:
     - app/controllers/users/omniauth_callbacks_controller.rb

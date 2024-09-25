@@ -1,9 +1,9 @@
 - if flash[:notice]
   p.alert.alert-success
-    = notice
+    = flash[:notice]
 - elsif flash[:alert]
   p.alert.alert-danger
-    = alert
+    = flash[:alert]
 - if @tweet && @tweet.errors.any?
   .alert.alert-danger
     ul

@@ -71,3 +71,20 @@ body .comment-frame {
   display: inline-block;
   margin-bottom: 16px;
 }
+
+.icons_detail {
+  display: flex;
+  margin-left: 16px;
+}
+
+.icons_detail .comment {
+  margin-right: 85px;
+}
+
+.icons_detail .repost {
+  margin-right: 85px;
+}
+
+.icons_detail .favorite {
+  margin-right: 85px;
+}

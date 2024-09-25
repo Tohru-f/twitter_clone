@@ -10,7 +10,6 @@ class TweetsController < ApplicationController
     @comments.each do |comment|
       @replies[comment.id] = Comment.where(parent_id: comment.id) if Comment.where(parent_id: comment.id).present?
     end
-    # binding.pry
   end
 
   def new
