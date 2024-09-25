@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
                                                 { images_attachments: :blob }]).select(:tweet_id).distinct
     @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+                                                { images_attachments: :blob }, :favorites, :comments]).select(:tweet_id).distinct
     @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob }, :favorites,
                                     :comments)
   end
