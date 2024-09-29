@@ -53,6 +53,11 @@ body
       div class="#{'show active' if params[:tab] == 'tweet'} tab-pane fade " id="tweet"
         - @tweets.each do |tweet|
           = link_to tweet_path(tweet.id) do
+            - if tweet.retweets.exists?(user: current_user)
+              ul
+                li
+                  = image_tag('repost.png', size: '20x20', class: 'titled_repost')
+                  object = link_to 'あなたがリポストしました', user_path(current_user.id)
             ul
               li
                 object = link_to image_tag(tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(tweet.user.id)
@@ -69,7 +74,12 @@ body
               = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(tweet.id)
               = tweet.comments.length
             .repost
-              = image_tag('repost.png', size: '26x26')
+              - if current_user.present? && tweet.retweets.exists?(user: current_user)
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweet_path(tweet_id: tweet.id, id: tweet.retweets.find_by(user: current_user).id), data: {turbo_method: :delete}
+                = tweet.retweets.length
+              - else
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweets_path(tweet_id: tweet.id), data: {turbo_method: :post}
+                = tweet.retweets.length
             .favorite
               - if current_user.present? && tweet.favorites.exists?(user: current_user)
                 = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: tweet.id, id: tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}
@@ -82,6 +92,11 @@ body
       div class="#{'show active' if params[:tab] == 'favorite'} tab-pane fade " id="favorite"
         - @favorites.each do |favorite|
           = link_to tweet_path(favorite.tweet_id) do
+            - if favorite.tweet.retweets.exists?(user: current_user)
+              ul
+                li
+                  = image_tag('repost.png', size: '20x20', class: 'titled_repost')
+                  object = link_to 'あなたがリポストしました', user_path(current_user.id)
             ul
               li
                 object = link_to image_tag(favorite.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(favorite.tweet.user.id)
@@ -98,7 +113,12 @@ body
               = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(favorite.tweet_id)
               = favorite.tweet.comments.length
             .repost
-              = image_tag('repost.png', size: '26x26')
+              - if current_user.present? && favorite.tweet.retweets.exists?(user: current_user)
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweet_path(tweet_id: favorite.tweet.id, id: favorite.tweet.retweets.find_by(user: current_user).id), data: {turbo_method: :delete}
+                = favorite.tweet.retweets.length
+              - else
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweets_path(tweet_id: favorite.tweet.id), data: {turbo_method: :post}
+                = favorite.tweet.retweets.length
             .favorite
               - if current_user.present? && favorite.tweet.favorites.exists?(user: current_user)
                 = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: favorite.tweet_id, id: favorite.tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}
@@ -111,6 +131,11 @@ body
       div class="#{'show active' if params[:tab] == 'retweet'} tab-pane fade " id="retweet"
         - @retweets.each do |retweet|
           = link_to tweet_path(retweet.tweet_id)
+            - if retweet.present?
+              ul
+                li
+                  = image_tag('repost.png', size: '20x20', class: 'titled_repost')
+                  object = link_to 'あなたがリポストしました', user_path(current_user.id)
             ul
               li
                 object = link_to image_tag(retweet.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(retweet.tweet.user.id)
@@ -127,7 +152,12 @@ body
               = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(retweet.tweet_id)
               = retweet.tweet.comments.length
             .repost
-              = image_tag('repost.png', size: '26x26')
+              - if current_user.present? && retweet.present?
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweet_path(tweet_id: retweet.tweet.id, id: retweet.tweet.retweets.find_by(user: current_user).id), data: {turbo_method: :delete}
+                = retweet.tweet.retweets.length
+              - else
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweets_path(tweet_id: retweet.tweet.id), data: {turbo_method: :post}
+                = retweet.tweet.retweets.length
             .favorite
               - if current_user.present? && retweet.tweet.favorites.exists?(user: current_user)
                 = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: retweet.tweet_id, id: retweet.tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}
@@ -140,6 +170,11 @@ body
       div class="#{'show active' if params[:tab] == 'comment'} tab-pane fade " id="comment"
         - @comments.each do |comment|
           = link_to tweet_path(comment.tweet_id)
+            - if comment.tweet.retweets.exists?(user: current_user)
+              ul
+                li
+                  = image_tag('repost.png', size: '20x20', class: 'titled_repost')
+                  object = link_to 'あなたがリポストしました', user_path(current_user.id)
             ul
               li
                 object = link_to image_tag(comment.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(comment.tweet.user.id)
@@ -156,7 +191,12 @@ body
               = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(comment.tweet_id)
               = comment.tweet.comments.length
             .repost
-              = image_tag('repost.png', size: '26x26')
+              - if current_user.present? && comment.tweet.retweets.exists?(user: current_user)
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweet_path(tweet_id: comment.tweet.id, id: comment.tweet.retweets.find_by(user: current_user).id), data: {turbo_method: :delete}
+                = comment.tweet.retweets.length
+              - else
+                = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweets_path(tweet_id: comment.tweet.id), data: {turbo_method: :post}
+                = comment.tweet.retweets.length
             .favorite
               - if current_user.present? && comment.tweet.favorites.exists?(user: current_user)
                 = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: comment.tweet_id, id: comment.tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}

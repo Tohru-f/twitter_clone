@@ -5,8 +5,11 @@ body.comment-frame
     h2
       = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), 'javascript:history.back()'
       | ポストする
-    br
-
+    - if @tweet.retweets.exists?(user: current_user)
+      ul
+        li
+          = image_tag('repost.png', size: '20x20', class: 'titled_repost')
+          object = link_to 'あなたがリポストしました', user_path(current_user.id)
     ul
       li
         = link_to image_tag(@tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(@tweet.user.id)
@@ -22,7 +25,12 @@ body.comment-frame
         = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(@tweet.id)
         = @tweet.comments.length
       .repost
-        = image_tag('repost.png', size: '26x26')
+        - if current_user.present? && @tweet.retweets.exists?(user: current_user)
+          = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweet_path(tweet_id: @tweet.id, id: @tweet.retweets.find_by(user: current_user).id), data: {turbo_method: :delete}
+          = @tweet.retweets.length
+        - else
+          = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweets_path(tweet_id: @tweet.id), data: {turbo_method: :post}
+          = @tweet.retweets.length
       .favorite
         - if current_user.present? && @tweet.favorites.exists?(user: current_user)
           = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: @tweet.id, id: @tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}

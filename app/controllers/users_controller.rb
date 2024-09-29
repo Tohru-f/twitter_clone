@@ -2,17 +2,18 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update show]
+  # ログインしていない場合、ログインページへ遷移させる
+  before_action :authenticate_user!, only: %i[show edit update]
 
   def show
     @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                  { images_attachments: :blob }, :favorites, :comments]).select(:tweet_id).distinct
-    # binding.pry
+                                                  { images_attachments: :blob }, :favorites, :comments, :retweets]).select(:tweet_id).distinct
     @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+                                                { images_attachments: :blob }, :comments, :favorites, :retweets]).select(:tweet_id).distinct
     @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                { images_attachments: :blob }, :favorites, :comments]).select(:tweet_id).distinct
+                                                { images_attachments: :blob }, :favorites, :comments, :retweets]).select(:tweet_id).distinct
     @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob }, :favorites,
-                                    :comments)
+                                    :comments, :retweets)
   end
 
   def edit; end
@@ -28,13 +29,13 @@ class UsersController < ApplicationController
   def profile
     @user = User.find(params[:format])
     @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                  { images_attachments: :blob }, :favorites, :comments]).select(:tweet_id).distinct
+                                                  { images_attachments: :blob }, :favorites, :comments, :retweets]).select(:tweet_id).distinct
     @retweets = @user.retweets.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+                                                { images_attachments: :blob }, :comments, :favorites, :retweets]).select(:tweet_id).distinct
     @comments = @user.comments.includes(tweet: [{ user: { icon_attachment: :blob } },
-                                                { images_attachments: :blob }]).select(:tweet_id).distinct
+                                                { images_attachments: :blob }, :comments, :favorites, :retweets]).select(:tweet_id).distinct
     @tweets = @user.tweets.includes({ user: { icon_attachment: :blob } }, { images_attachments: :blob }, :favorites,
-                                    :comments)
+                                    :comments, :retweets)
   end
 
   private
