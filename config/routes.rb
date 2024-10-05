@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     resources :retweets, only: %i[create destroy]
   end
 
+  resources :followers, only: %i[create destroy]
+
   resources :tweets, only: %i[new create show]
 
   resources :comments, only: %i[new create show]
