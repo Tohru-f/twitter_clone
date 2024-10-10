@@ -92,3 +92,23 @@ body .comment-frame {
 .icons_detail .circled_arrow {
   margin-right: 5px;
 }
+
+li.dropdown-tweets {
+  line-height: 50px;
+  margin-left: 30px;
+  position: relative;
+  cursor: pointer;
+  &:hover ul.sub-list{
+    display: block;
+  }
+}
+ul.sub-list {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 1;
+  display: none;
+  background-color: black;
+  width: 300px;
+  height: 30px;
+}

@@ -14,13 +14,20 @@ Rails.application.routes.draw do
   get '/users/sign_in', to: 'users/sessions#new'
   get '/users/sign_up', to: 'users/registrations#new'
 
-  resources :users, only: %i[show edit update]
+  resources :users, only: %i[show edit update] do
+    member do
+      post 'follow'
+      delete 'unfollow'
+    end
+  end
 
   resources :tweets do
     resources :favorites, only: %i[create destroy new]
     resources :comments, only: %i[new create show destroy edit]
     resources :retweets, only: %i[create destroy]
   end
+
+  resources :followers, only: %i[create destroy]
 
   resources :tweets, only: %i[new create show]
 

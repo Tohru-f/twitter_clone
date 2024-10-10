@@ -6,8 +6,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable, :omniauthable, omniauth_providers: %i[github]
   validates :uid, uniqueness: { scope: :provider }, if: -> { uid.present? }
+
   has_many :relations, dependent: :destroy
-  has_many :followers, through: :relations
+  has_many :following, through: :relations, source: :follower
+
+  has_many :passive_relations, class_name: 'Relation', foreign_key: :follower_id, dependent: :destroy,
+                               inverse_of: :follower
+  has_many :followers, through: :passive_relations, source: :user
+
   has_one_attached :icon
   has_one_attached :header
   has_many :tweets, dependent: :destroy

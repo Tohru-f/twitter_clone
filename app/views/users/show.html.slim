@@ -64,6 +64,23 @@ body
               li 
                 object = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
               li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present? && tweet.user.name.include?(current_user.name)
+                li.dropdown
+                  | ... 
+              - elsif current_user.present? && tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{tweet.user.name}さんのフォローを解除する", unfollow_user_path(tweet.user), data: {turbo_method: :delete}
+              - elsif current_user.present? && !tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{tweet.user.name}さんをフォロー", follow_user_path(weet.user), data: {turbo_method: :post}
             p = tweet.content
             - if tweet.images.attached?
               - tweet.images.each do |tweet_image|
@@ -103,6 +120,23 @@ body
               li 
                 object = link_to favorite.tweet.user.name, profile_path(favorite.tweet.user.id), class: 'link'
               li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present? && favorite.tweet.user.name.include?(current_user.name)
+                li.dropdown
+                  | ... 
+              - elsif current_user.present? && favorite.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{favorite.tweet.user.name}さんのフォローを解除する", unfollow_user_path(favorite.tweet.user), data: {turbo_method: :delete}
+              - elsif current_user.present? && !favorite.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{favorite.tweet.user.name}さんをフォロー", follow_user_path(favorite.tweet.user), data: {turbo_method: :post}
             p = favorite.tweet.content
             - if favorite.tweet.images.attached?
               - favorite.tweet.images.each do |tweet_image|
@@ -142,6 +176,23 @@ body
               li 
                 object = link_to retweet.tweet.user.name, profile_path(retweet.tweet.user.id), class: 'link'
               li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present? && retweet.tweet.user.name.include?(current_user.name)
+                li.dropdown
+                  | ... 
+              - elsif current_user.present? && retweet.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{retweet.tweet.user.name}さんのフォローを解除する", unfollow_user_path(retweet.tweet.user), data: {turbo_method: :delete}
+              - elsif current_user.present? && !retweet.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{retweet.tweet.user.name}さんをフォロー", follow_user_path(retweet.tweet.user), data: {turbo_method: :post}
             p = retweet.tweet.content
             - if retweet.tweet.images.attached?
               - retweet.tweet.images.each do |tweet_image|
@@ -181,6 +232,23 @@ body
               li 
                 object = link_to comment.tweet.user.name, profile_path(comment.tweet.user.id), class: 'link'
               li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present? && comment.tweet.user.name.include?(current_user.name)
+                li.dropdown
+                  | ... 
+              - elsif current_user.present? && comment.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{comment.tweet.user.name}さんのフォローを解除する", unfollow_user_path(comment.tweet.user), data: {turbo_method: :delete}
+              - elsif current_user.present? && !comment.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+                li.dropdown
+                  | ... 
+                  ul.sub-list
+                    li.sub
+                      object
+                        = link_to "#{comment.tweet.user.name}さんをフォロー", follow_user_path(comment.tweet.user), data: {turbo_method: :post}
             p = comment.tweet.content
             - if comment.tweet.images.attached?
               - comment.tweet.images.each do |tweet_image|

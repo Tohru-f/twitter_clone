@@ -1,9 +1,24 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update show]
+  before_action :set_user, only: %i[update show edit]
+  before_action :set_followers, only: %i[unfollow]
   # ログインしていない場合、ログインページへ遷移させる
-  before_action :authenticate_user!, only: %i[show edit update]
+  before_action :authenticate_user!, only: %i[show edit update follow unfollow]
+
+  def follow
+    @relation = current_user.relations.build(follower_id: params[:id])
+    if @relation.save
+      redirect_to home_index_path, notice: 'フォローしました。'
+    else
+      redirect_to home_index_path, alert: 'フォローに失敗しました。'
+    end
+  end
+
+  def unfollow
+    @relation.destroy!
+    redirect_to home_index_path, notice: 'フォローを解除しました。'
+  end
 
   def show
     @favorites = @user.favorites.includes(tweet: [{ user: { icon_attachment: :blob } },
@@ -40,9 +55,11 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user
-    return unless current_user
+  def set_followers
+    @relation = current_user.relations.find_by(follower_id: params[:id])
+  end
 
+  def set_user
     @user = User.find(current_user.id)
   end
 

@@ -146,3 +146,21 @@ a:link:not(.page-link), a:visited:not(.page-link), a:hover:not(.page-link), a:ac
 .icons .circled_arrow {
   margin-right: 5px;
 }
+
+li.dropdown {
+  line-height: 50px;
+  margin-left: 30px;
+  &:hover ul.sub-list{
+    display: block;
+  }
+}
+ul.sub-list {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 1;
+  display: none;
+  background-color: black;
+  width: 300px;
+  height: 30px;
+}
