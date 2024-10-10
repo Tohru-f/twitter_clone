@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[show edit update follow unfollow]
 
   def follow
-    @relation = Relation.new(user_id: current_user.id, follower_id: params[:id])
+    @relation = current_user.relations.build(follower_id: params[:id])
     if @relation.save
       redirect_to home_index_path, notice: 'フォローしました。'
     else
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   private
 
   def set_followers
-    @relation = Relation.find_by(follower_id: params[:id])
+    @relation = current_user.relations.find_by(follower_id: params[:id])
   end
 
   def set_user
