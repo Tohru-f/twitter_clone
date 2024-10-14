@@ -10,4 +10,9 @@ if defined?(Bullet)
   Bullet.add_safelist type: :n_plus_one_query, class_name: 'Tweet', association: :user
 
   Bullet.add_safelist type: :unused_eager_loading, class_name: 'Tweet', association: :user
+
+  Bullet.add_safelist(type: :unused_eager_loading, class_name: 'User', association: :relations)
+
+  Bullet.add_safelist(type: :unused_eager_loading, class_name: 'User', association: :followers)
+
 end

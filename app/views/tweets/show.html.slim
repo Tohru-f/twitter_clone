@@ -15,6 +15,23 @@ body.comment-frame
         = link_to image_tag(@tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(@tweet.user.id)
       li
         = link_to @tweet.user.name, profile_path(@tweet.user.id)
+      - if current_user.present? && @tweet.user.name.include?(current_user.name)
+        li.dropdown-tweets
+          | ... 
+      - elsif current_user.present? && @tweet.user.followers.pluck(:user_id).include?(current_user.id)
+        li.dropdown-tweets
+          | ... 
+          ul.sub-list
+            li.sub
+              object
+                = link_to "#{@tweet.user.name}さんのフォローを解除する", unfollow_user_path(@tweet.user), data: {turbo_method: :delete}
+      - elsif current_user.present? && !@tweet.user.followers.pluck(:user_id).include?(current_user.id)
+        li.dropdown-tweets
+          | ... 
+          ul.sub-list
+            li.sub
+              object
+                = link_to "#{@tweet.user.name}さんをフォロー", follow_user_path(@tweet.user), data: {turbo_method: :post}
     p = @tweet.content
     - if @tweet.images.attached?
       - @tweet.images.each do |tweet_image|
