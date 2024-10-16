@@ -55,6 +55,11 @@ body.comment-frame
         - else
           = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: @tweet.id), data: {turbo_method: :post}
           = @tweet.favorites.length
+      .bookmark
+        - if current_user.present? && @tweet.bookmarks.exists?(user: current_user)
+          = link_to image_tag('bookmarked.png', size: '20x20'), tweet_bookmark_path(tweet_id: @tweet.id, id: @tweet.bookmarks.find_by(user: current_user).id), data: {turbo_method: :delete}
+        - else
+          = link_to image_tag('not_bookmark.png', size: '20x20'), tweet_bookmarks_path(tweet_id: @tweet.id), data: {turbo_method: :post}
     hr
     .comment
       = form_with model: @comment, scope: :comment, url: tweet_comments_path(@tweet), local: true, data: { turbo: false } do |f|

@@ -104,6 +104,11 @@ body
               - else
                 = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: tweet.id), data: {turbo_method: :post}
                 = tweet.favorites.length
+            .bookmark
+              - if current_user.present? && tweet.bookmarks.exists?(user: current_user)
+                = link_to image_tag('bookmarked.png', size: '20x20'), tweet_bookmark_path(tweet_id: tweet.id, id: tweet.bookmarks.find_by(user: current_user).id), data: {turbo_method: :delete}
+              - else
+                = link_to image_tag('not_bookmark.png', size: '20x20'), tweet_bookmarks_path(tweet_id: tweet.id), data: {turbo_method: :post}
           hr
         
       div class="#{'show active' if params[:tab] == 'favorite'} tab-pane fade " id="favorite"
@@ -160,6 +165,11 @@ body
               - else
                 = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: favorite.tweet_id), data: {turbo_method: :post}
                 = favorite.tweet.favorites.length
+            .bookmark
+              - if current_user.present? && favorite.tweet.bookmarks.exists?(user: current_user)
+                = link_to image_tag('bookmarked.png', size: '20x20'), tweet_bookmark_path(tweet_id: favorite.tweet.id, id: favorite.tweet.bookmarks.find_by(user: current_user).id), data: {turbo_method: :delete}
+              - else
+                = link_to image_tag('not_bookmark.png', size: '20x20'), tweet_bookmarks_path(tweet_id: favorite.tweet.id), data: {turbo_method: :post}
           hr
 
       div class="#{'show active' if params[:tab] == 'retweet'} tab-pane fade " id="retweet"
@@ -216,6 +226,11 @@ body
               - else
                 = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: retweet.tweet_id), data: {turbo_method: :post}
                 = retweet.tweet.favorites.length
+            .bookmark
+              - if current_user.present? && retweet.tweet.bookmarks.exists?(user: current_user)
+                = link_to image_tag('bookmarked.png', size: '20x20'), tweet_bookmark_path(tweet_id: retweet.tweet.id, id: retweet.tweet.bookmarks.find_by(user: current_user).id), data: {turbo_method: :delete}
+              - else
+                = link_to image_tag('not_bookmark.png', size: '20x20'), tweet_bookmarks_path(tweet_id: retweet.tweet.id), data: {turbo_method: :post}
           hr
 
       div class="#{'show active' if params[:tab] == 'comment'} tab-pane fade " id="comment"
@@ -272,5 +287,10 @@ body
               - else
                 = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: comment.tweet_id), data: {turbo_method: :post}
                 = comment.tweet.favorites.length
+            .bookmark
+              - if current_user.present? && comment.tweet.bookmarks.exists?(user: current_user)
+                = link_to image_tag('bookmarked.png', size: '20x20'), tweet_bookmark_path(tweet_id: comment.tweet.id, id: comment.tweet.bookmarks.find_by(user: current_user).id), data: {turbo_method: :delete}
+              - else
+                = link_to image_tag('not_bookmark.png', size: '20x20'), tweet_bookmarks_path(tweet_id: comment.tweet.id), data: {turbo_method: :post}
           hr
 

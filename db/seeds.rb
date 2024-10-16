@@ -70,53 +70,47 @@ user4.icon.attach(io: File.open(Rails.root.join('app/assets/images/Nakaoka_Shint
 user4.header.attach(io: File.open(Rails.root.join('app/assets/images/maruniwatanohana.gif')),
                     filename: 'maruniwatanohana.gif')
 
-follower1 = Follower.create!(
-  user_id: user2.id
-)
-Relation.create!(
-  user_id: user1.id,
-  follower_id: follower1.id
-)
+# Followerモデルを削除したので、新たにseedsでデータを投入する場合はRelationテーブルのデータ生成内容を作り直す必要がある
 
-follower2 = Follower.create!(
-  user_id: user1.id
-)
-Relation.create!(
-  user_id: user2.id,
-  follower_id: follower2.id
-)
+# follower1 = Follower.create!(
+#   user_id: user2.id
+# )
+# Relation.create!(
+#   user_id: user1.id,
+#   follower_id: follower1.id
+# )
 
-follower3 = Follower.create!(
-  user_id: user3.id
-)
-Relation.create!(
-  user_id: user1.id,
-  follower_id: follower3.id
-)
+# follower2 = Follower.create!(
+#   user_id: user1.id
+# )
+# Relation.create!(
+#   user_id: user2.id,
+#   follower_id: follower2.id
+# )
 
-follower4 = Follower.create!(
-  user_id: user4.id
-)
-Relation.create!(
-  user_id: user1.id,
-  follower_id: follower4.id
-)
+# follower3 = Follower.create!(
+#   user_id: user3.id
+# )
+# Relation.create!(
+#   user_id: user1.id,
+#   follower_id: follower3.id
+# )
 
-follower5 = Follower.create!(
-  user_id: user2.id
-)
-Relation.create!(
-  user_id: user4.id,
-  follower_id: follower5.id
-)
+# follower4 = Follower.create!(
+#   user_id: user4.id
+# )
+# Relation.create!(
+#   user_id: user1.id,
+#   follower_id: follower4.id
+# )
 
-# user1.followers << user2
-# user1.followers << user3
-# user1.save
-
-# user2.followers << user1
-# user2.followers << user3
-# user2.save
+# follower5 = Follower.create!(
+#   user_id: user2.id
+# )
+# Relation.create!(
+#   user_id: user4.id,
+#   follower_id: follower5.id
+# )
 
 User.all.ids.sort.each do |user_id|
   Tweet.create!(

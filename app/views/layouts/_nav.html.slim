@@ -21,7 +21,10 @@
       li.logo_name  = 'リスト'
     ul
       li  = image_tag('bookmark.png', size: '30x30')
-      li.logo_name  = 'ブックマーク'
+      - if user_signed_in?
+        = link_to 'ブックマーク', list_bookmarks_path, class: 'logo_name font-size:30px'
+      - else
+        li.logo_name  = 'ブックマーク'
     ul
       li  = image_tag('community.png', size: '30x30')
       li.logo_name  = 'コミュニティ'
