@@ -25,6 +25,13 @@ Rails.application.routes.draw do
     resources :favorites, only: %i[create destroy new]
     resources :comments, only: %i[new create show destroy edit]
     resources :retweets, only: %i[create destroy]
+    resources :bookmarks, only: %i[create destroy]
+  end
+
+  resources :bookmarks, only: [] do
+    collection do
+      get 'list'
+    end
   end
 
   resources :followers, only: %i[create destroy]

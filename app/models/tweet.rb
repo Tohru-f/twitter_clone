@@ -7,4 +7,5 @@ class Tweet < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :retweets, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 end

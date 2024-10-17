@@ -1,0 +1,67 @@
+body
+  = render partial: "layouts/nav"
+
+  .frame-box
+    h2
+      | ブックマーク
+    br
+    .tab-content
+      - @bookmarks.each do |bookmark|
+        = link_to tweet_path(bookmark.tweet.id) do
+          - if bookmark.tweet.retweets.exists?(user: current_user)
+            ul
+              li
+                = image_tag('repost.png', size: '20x20', class: 'titled_repost')
+                object = link_to 'あなたがリポストしました', user_path(current_user.id)
+          ul
+            li
+              object = link_to image_tag(bookmark.tweet.user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), profile_path(bookmark.tweet.user.id)
+            li 
+              object = link_to bookmark.tweet.user.name, profile_path(bookmark.tweet.user.id), class: 'link'
+            li 投稿日： #{bookmark.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            - if current_user.present? && bookmark.tweet.user.name.include?(current_user.name)
+              li.dropdown
+                | ... 
+            - elsif current_user.present? && bookmark.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+              li.dropdown
+                | ... 
+                ul.sub-list
+                  li.sub
+                    object
+                      = link_to "#{bookmark.tweet.user.name}さんのフォローを解除する", unfollow_user_path(bookmark.tweet.user), data: {turbo_method: :delete}
+            - elsif current_user.present? && !bookmark.tweet.user.followers.pluck(:user_id).include?(current_user.id)
+              li.dropdown
+                | ... 
+                ul.sub-list
+                  li.sub
+                    object
+                      = link_to "#{bookmark.tweet.user.name}さんをフォロー", follow_user_path(bookmark.tweet.user), data: {turbo_method: :post}
+          p = bookmark.tweet.content 
+          - if bookmark.tweet.images.attached?
+            - bookmark.tweet.images.each do |tweet_image|
+              = image_tag tweet_image, size: '250x200', class: "tweet_image"
+        end
+        .icons
+          .comment
+            = link_to image_tag('comment.png', size: '26x26', class: "balloon"), tweet_path(bookmark.tweet.id)
+            = bookmark.tweet.comments.length
+          .repost
+            - if current_user.present? && bookmark.tweet.retweets.exists?(user: current_user)
+              = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweet_path(tweet_id: bookmark.tweet.id, id: bookmark.tweet.retweets.find_by(user: current_user).id), data: {turbo_method: :delete}
+              = bookmark.tweet.retweets.length
+            - else
+              = link_to image_tag('repost.png', size: '26x26', class: "circled_arrow"), tweet_retweets_path(tweet_id: bookmark.tweet.id), data: {turbo_method: :post}
+              = bookmark.tweet.retweets.length
+          .favorite
+            - if current_user.present? && bookmark.tweet.favorites.exists?(user: current_user)
+              = link_to image_tag('heart.png', size: '32x32'), tweet_favorite_path(tweet_id: bookmark.tweet.id, id: bookmark.tweet.favorites.find_by(user: current_user).id), data: {turbo_method: :delete}
+              = bookmark.tweet.favorites.length
+            - else
+              = link_to image_tag('heart_with_hole.png', size: '32x32'), tweet_favorites_path(tweet_id: bookmark.tweet.id), data: {turbo_method: :post}
+              = bookmark.tweet.favorites.length
+          .bookmark
+            - if current_user.present? && bookmark.tweet.bookmarks.exists?(user: current_user)
+              = link_to image_tag('bookmarked.png', size: '20x20'), tweet_bookmark_path(tweet_id: bookmark.tweet.id, id: bookmark.tweet.bookmarks.find_by(user: current_user).id), data: {turbo_method: :delete}
+            - else
+              = link_to image_tag('not_bookmark.png', size: '20x20'), tweet_bookmarks_path(tweet_id: bookmark.tweet.id), data: {turbo_method: :post}
+        hr
