@@ -1,0 +1,19 @@
+body
+  = render partial: "layouts/nav"
+
+  .message-box
+    .entrance-rooms
+      h2
+        | メッセージ
+      br
+
+      - @rooms.each do |room|
+        - if current_user.present?
+          - if room.entries.exists?(user_id: current_user.id)
+            - other_user = room.users.reject { |user| user == current_user }.first
+            p = link_to other_user.name, room_path(room)
+            - if room.messages.present? && room.messages.first.content.present?
+              p = truncate(room.messages.first.content, length: 20)
+            hr
+
+

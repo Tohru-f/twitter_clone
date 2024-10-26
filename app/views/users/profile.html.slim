@@ -11,10 +11,19 @@ body
       p = image_tag(@user.header, class: "header")
       p = image_tag(@user.icon, class: "icon_image absolute", size: "240x240")
       - if @user.id != current_user.id
+        - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, @user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
         - if @user.followers.pluck(:user_id).include?(current_user.id)
           = link_to 'フォローを解除する', unfollow_user_path(@user), data: {turbo_method: :delete}, class: "edit"
+          - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+            = link_to image_tag("message.png", alt: "message box", size: "60x60", class: "edit"), room_path(room_with_tweet_user)
+          - else # ２人のチャットルームが無くて作成が必要な場合
+            = link_to image_tag("message.png", alt: "message box", size: "60x60", class: "edit"), make_rooms_rooms_path(user_id: @user.id), data: {turbo_method: :post}
         - else
           = link_to 'フォローする', follow_user_path(@user), data: {turbo_method: :post}, class: "edit"
+          - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+            = link_to image_tag("message.png", alt: "message box", size: "60x60", class: "edit"), room_path(room_with_tweet_user)
+          - else # ２人のチャットルームが無くて作成が必要な場合
+            = link_to image_tag("message.png", alt: "message box", size: "60x60", class: "edit"), make_rooms_rooms_path(user_id: @user.id), data: {turbo_method: :post}
       - else
 
     br
@@ -69,6 +78,8 @@ body
               li 
                 object = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
               li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present?
+                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
               - if current_user.present? && tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -79,6 +90,11 @@ body
                     li.sub
                       object
                         = link_to "#{tweet.user.name}さんのフォローを解除する", unfollow_user_path(tweet.user), data: {turbo_method: :delete}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -86,6 +102,11 @@ body
                     li.sub
                       object
                         = link_to "#{tweet.user.name}さんをフォロー", follow_user_path(tweet.user), data: {turbo_method: :post}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: tweet.user.id), data: {turbo_method: :post}
             p = tweet.content
             - if tweet.images.attached?
               - tweet.images.each do |tweet_image|
@@ -130,6 +151,8 @@ body
               li 
                 object = link_to favorite.tweet.user.name, profile_path(favorite.tweet.user.id), class: 'link'
               li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present?
+                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, favorite.tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
               - if current_user.present? && favorite.tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -140,6 +163,11 @@ body
                     li.sub
                       object
                         = link_to "#{favorite.tweet.user.name}さんのフォローを解除する", unfollow_user_path(favorite.tweet.user), data: {turbo_method: :delete}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: favorite.tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !favorite.tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -147,6 +175,11 @@ body
                     li.sub
                       object
                         = link_to "#{favorite.tweet.user.name}さんをフォロー", follow_user_path(favorite.tweet.user), data: {turbo_method: :post}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: favorite.tweet.user.id), data: {turbo_method: :post}
             p = favorite.tweet.content
             - if favorite.tweet.images.attached?
               - favorite.tweet.images.each do |tweet_image|
@@ -191,6 +224,8 @@ body
               li 
                 object = link_to retweet.tweet.user.name, profile_path(retweet.tweet.user.id), class: 'link'
               li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present?
+                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, retweet.tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
               - if current_user.present? && retweet.tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -201,6 +236,11 @@ body
                     li.sub
                       object
                         = link_to "#{retweet.tweet.user.name}さんのフォローを解除する", unfollow_user_path(retweet.tweet.user), data: {turbo_method: :delete}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: retweet.tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !retweet.tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -208,6 +248,11 @@ body
                     li.sub
                       object
                         = link_to "#{retweet.tweet.user.name}さんをフォロー", follow_user_path(retweet.tweet.user), data: {turbo_method: :post}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: retweet.tweet.user.id), data: {turbo_method: :post}
             p = retweet.tweet.content
             - if retweet.tweet.images.attached?
               - retweet.tweet.images.each do |tweet_image|
@@ -252,6 +297,8 @@ body
               li 
                 object = link_to comment.tweet.user.name, profile_path(comment.tweet.user.id), class: 'link'
               li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+              - if current_user.present?
+                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, comment.tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
               - if current_user.present? && comment.tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -262,6 +309,11 @@ body
                     li.sub
                       object
                         = link_to "#{comment.tweet.user.name}さんのフォローを解除する", unfollow_user_path(comment.tweet.user), data: {turbo_method: :delete}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: comment.tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !comment.tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -269,6 +321,11 @@ body
                     li.sub
                       object
                         = link_to "#{comment.tweet.user.name}さんをフォロー", follow_user_path(comment.tweet.user), data: {turbo_method: :post}
+                        br
+                        - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                        - else # ２人のチャットルームが無くて作成が必要な場合
+                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: comment.tweet.user.id), data: {turbo_method: :post}
             p = comment.tweet.content
             - if comment.tweet.images.attached?
               - comment.tweet.images.each do |tweet_image|

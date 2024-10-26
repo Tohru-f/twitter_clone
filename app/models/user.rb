@@ -22,6 +22,10 @@ class User < ApplicationRecord
   has_many :retweets, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
 
+  has_many :entries, dependent: :destroy
+  has_many :rooms, through: :entries # これを入れることでuser.roomsといった使い方が可能になる
+  has_many :messages, dependent: :destroy
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email

@@ -32,3 +32,4 @@ Hc/RailsSpecificActionName:
     - app/controllers/application_controller.rb
     - app/controllers/users_controller.rb
     - app/controllers/bookmarks_controller.rb
+    - app/controllers/rooms_controller.rb
