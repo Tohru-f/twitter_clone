@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
 
   def create
     @room = Room.find(params[:room_id])
-    @message = @room.messages.create(user_id: current_user.id, content: params[:message][:content])
+    @message = @room.messages.build(user_id: current_user.id, content: params[:message][:content])
 
     if @message.save
       redirect_to room_path(@room), notice: 'メッセージが送信されました。'

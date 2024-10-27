@@ -65,7 +65,7 @@ body
                 object = link_to tweet.user.name, profile_path(tweet.user.id), class: 'link'
               li 投稿日： #{tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
               - if current_user.present?
-                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
+                - room_with_tweet_user = check_rooms(tweet.user)
               - if current_user.present? && tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -80,7 +80,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{tweet.user.name}さんにメッセージを送る", rooms_path(user_id: tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -92,7 +92,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{tweet.user.name}さんにメッセージを送る", rooms_path(user_id: tweet.user.id), data: {turbo_method: :post}
             p = tweet.content
             - if tweet.images.attached?
               - tweet.images.each do |tweet_image|
@@ -138,7 +138,7 @@ body
                 object = link_to favorite.tweet.user.name, profile_path(favorite.tweet.user.id), class: 'link'
               li 投稿日： #{favorite.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
               - if current_user.present?
-                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, favorite.tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
+                - room_with_tweet_user = check_rooms(favorite.tweet.user)
               - if current_user.present? && favorite.tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -153,7 +153,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: favorite.tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: favorite.tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !favorite.tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -165,7 +165,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: favorite.tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{favorite.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: favorite.tweet.user.id), data: {turbo_method: :post}
             p = favorite.tweet.content
             - if favorite.tweet.images.attached?
               - favorite.tweet.images.each do |tweet_image|
@@ -211,7 +211,7 @@ body
                 object = link_to retweet.tweet.user.name, profile_path(retweet.tweet.user.id), class: 'link'
               li 投稿日： #{retweet.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
               - if current_user.present?
-                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, retweet.tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
+                - room_with_tweet_user = check_rooms(retweet.tweet.user)
               - if current_user.present? && retweet.tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -226,7 +226,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: retweet.tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: retweet.tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !retweet.tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -238,7 +238,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: retweet.tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{retweet.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: retweet.tweet.user.id), data: {turbo_method: :post}
             p = retweet.tweet.content
             - if retweet.tweet.images.attached?
               - retweet.tweet.images.each do |tweet_image|
@@ -284,7 +284,7 @@ body
                 object = link_to comment.tweet.user.name, profile_path(comment.tweet.user.id), class: 'link'
               li 投稿日： #{comment.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
               - if current_user.present?
-                - room_with_tweet_user = Room.joins(:entries).where(entries: { user_id: [current_user.id, comment.tweet.user.id]}).group('rooms.id').having('COUNT(entries.id) = 2').first
+                - room_with_tweet_user = check_rooms(comment.tweet.user)
               - if current_user.present? && comment.tweet.user.name.include?(current_user.name)
                 li.dropdown
                   | ... 
@@ -299,7 +299,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{comment.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: comment.tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: comment.tweet.user.id), data: {turbo_method: :post}
               - elsif current_user.present? && !comment.tweet.user.followers.pluck(:user_id).include?(current_user.id)
                 li.dropdown
                   | ... 
@@ -311,7 +311,7 @@ body
                         - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
                           = link_to "#{comment.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
                         - else # ２人のチャットルームが無くて作成が必要な場合
-                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", make_rooms_rooms_path(user_id: comment.tweet.user.id), data: {turbo_method: :post}
+                          = link_to "#{comment.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: comment.tweet.user.id), data: {turbo_method: :post}
             p = comment.tweet.content
             - if comment.tweet.images.attached?
               - comment.tweet.images.each do |tweet_image|

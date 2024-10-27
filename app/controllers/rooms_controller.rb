@@ -2,7 +2,7 @@
 
 class RoomsController < ApplicationController
   # 誰がどのルームに居るかを管理する
-  def make_rooms
+  def create
     @room = Room.create
 
     @entrie = @room.entries.build(user_id: params[:user_id])

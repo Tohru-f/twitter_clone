@@ -34,9 +34,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rooms, only: %i[index show] do
+  resources :rooms, only: %i[index show create] do
     resources :messages, only: %i[new create]
-    post 'make_rooms', on: :collection
   end
 
   resources :followers, only: %i[create destroy]
