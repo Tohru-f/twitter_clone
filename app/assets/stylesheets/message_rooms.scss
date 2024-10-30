@@ -1,0 +1,63 @@
+.message-box {
+  width: calc(100% - 300px);
+  border-left: solid 1px #a9a9a9;
+  float: right;
+  padding: 0px 10px 0px 10px;
+}
+
+.entrance-rooms{
+  // border-right: solid 1px #a9a9a9;
+}
+
+.message-box .login_user {
+  margin: 0; 
+  padding: 0;
+}
+
+.message-box .box1 {
+  padding: 0.5em 1em;
+  margin: 0 0 0 auto;
+  color: white;/*文字色*/
+  background: dodgerblue;
+  border-radius: 15px 15px 3px 15px;/*角の丸み*/
+  width: 300px;
+}
+
+.message-box .the_other_user {
+  margin: 0; 
+  padding: 0;
+}
+
+.message-box .box2 {
+  padding: 0.5em 1em;
+  margin: 0 auto 0 0;
+  color: white;/*文字色*/
+  background: dimgray;
+  border-radius: 15px 15px 15px 3px;/*角の丸み*/
+  width: 300px;
+}
+
+.message-room{
+  position: fixed;
+  bottom: 0;
+}
+
+.message-form {
+  background-color: black;
+  color: white;
+  width: 1000px;
+}
+
+.message-form:focus {
+  background-color: black;
+  color: white;
+}
+
+.message-room ul {
+  padding-left: 0px;
+}
+
+.message-room ul li {
+  display: inline-block;
+  list-style: none;
+}

@@ -19,6 +19,8 @@ body
             li 
               object = link_to bookmark.tweet.user.name, profile_path(bookmark.tweet.user.id), class: 'link'
             li 投稿日： #{bookmark.tweet.created_at.strftime('%Y/%m/%d %H:%M:%S')}
+            - if current_user.present? # ツイートのユーザーとログインユーザーが共に所属するチャットルームが存在するかをデータベースから検索する
+              - room_with_tweet_user = check_rooms(bookmark.tweet.user)
             - if current_user.present? && bookmark.tweet.user.name.include?(current_user.name)
               li.dropdown
                 | ... 
@@ -29,6 +31,11 @@ body
                   li.sub
                     object
                       = link_to "#{bookmark.tweet.user.name}さんのフォローを解除する", unfollow_user_path(bookmark.tweet.user), data: {turbo_method: :delete}
+                      br
+                      - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                        = link_to "#{bookmark.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                      - else # ２人のチャットルームが無くて作成が必要な場合
+                        = link_to "#{bookmark.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: bookmark.tweet.user.id), data: {turbo_method: :post}
             - elsif current_user.present? && !bookmark.tweet.user.followers.pluck(:user_id).include?(current_user.id)
               li.dropdown
                 | ... 
@@ -36,6 +43,11 @@ body
                   li.sub
                     object
                       = link_to "#{bookmark.tweet.user.name}さんをフォロー", follow_user_path(bookmark.tweet.user), data: {turbo_method: :post}
+                      br
+                      - if room_with_tweet_user.present? # 既に２人のチャットルームがある場合
+                        = link_to "#{bookmark.tweet.user.name}さんにメッセージを送る", room_path(room_with_tweet_user)
+                      - else # ２人のチャットルームが無くて作成が必要な場合
+                        = link_to "#{bookmark.tweet.user.name}さんにメッセージを送る", rooms_path(user_id: bookmark.tweet.user.id), data: {turbo_method: :post}
           p = bookmark.tweet.content 
           - if bookmark.tweet.images.attached?
             - bookmark.tweet.images.each do |tweet_image|

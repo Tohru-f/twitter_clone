@@ -26,9 +26,11 @@ Layout/LineLength:
     - app/controllers/tweets_controller.rb
     - app/controllers/comments_controller.rb
     - app/controllers/users_controller.rb
+    - app/helpers/rooms_helper.rb
 Hc/RailsSpecificActionName:
   Exclude:
     - app/controllers/users/omniauth_callbacks_controller.rb
     - app/controllers/application_controller.rb
     - app/controllers/users_controller.rb
     - app/controllers/bookmarks_controller.rb
+    - app/controllers/rooms_controller.rb

@@ -1,0 +1,27 @@
+body
+  = render partial: "layouts/nav"
+
+  .message-box
+    h2
+      = link_to image_tag("arrow_back.png", alt: "Arrow back", size: "35x35"), rooms_path
+      - opponent = @room.users.reject { |user| user == current_user }.first
+      = "#{opponent.name}さんとのメッセージ"
+    br
+
+    - @messages.each do|message|
+      - if message.user == current_user
+        .box1
+          p.login_user = message.content
+      - else
+        .box2
+          p.the_other_user = message.content
+      br
+
+
+    .message-room
+      = form_with model: @message, url: room_messages_path(@room), local: true, data: { turbo: false } do |f|
+        ul
+          li
+            = f.text_field :content, placeholder: '新しいメッセージを作成', class: "message-form form-control", style: "border: none"
+          li
+            = f.submit '送信', class: 'btn btn-primary'
