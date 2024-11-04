@@ -26,6 +26,13 @@ class User < ApplicationRecord
   has_many :rooms, through: :entries # これを入れることでuser.roomsといった使い方が可能になる
   has_many :messages, dependent: :destroy
 
+  # 自分からの通知
+  has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy,
+                                  inverse_of: 'passive_notificationsnotifications'
+  # 相手からの通知
+  has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy,
+                                   inverse_of: 'active_notifications'
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -38,5 +45,17 @@ class User < ApplicationRecord
         user.save
       end
     end
+  end
+
+  def create_notification_follow!(current_user)
+    temp = Notification.where(['visitor_id = ? and visited_id = ? and action = ?', current_user.id, id, 'follow'])
+    return if temp.present?
+
+    notification = current_user.active_notifications.new(
+      visited_id: id,
+      action: 'follow'
+    )
+    notification.save if notification.valid?
+    NotificationMailer.send_notification(notification, User.find(id), current_user).deliver_now
   end
 end

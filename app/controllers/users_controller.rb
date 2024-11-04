@@ -8,7 +8,9 @@ class UsersController < ApplicationController
 
   def follow
     @relation = current_user.relations.build(follower_id: params[:id])
+    @user = User.find(params[:id])
     if @relation.save
+      @user.create_notification_follow!(current_user)
       redirect_to home_index_path, notice: 'フォローしました。'
     else
       redirect_to home_index_path, alert: 'フォローに失敗しました。'

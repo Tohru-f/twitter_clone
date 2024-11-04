@@ -5,11 +5,12 @@
       li  = image_tag('house.png', size: '30x30')
       li.logo_name  = link_to 'ホーム', root_path, class: 'link'
     ul
-      li  = image_tag('search.png', size: '30x30')
-      li.logo_name  = '話題を検索'
-    ul
-      li  = image_tag('notification.png', size: '30x30')
-      li.logo_name  = '通知'
+      / li  = image_tag('notification.png', size: '30x30')
+      li = image_tag('notification.png', size: '30x30')
+      - if user_signed_in?
+        = link_to '通知', notifications_path, class: 'logo_name font-size:30px'
+      - else
+          li.logo_name  = '通知'
     ul
       li  = image_tag('mail.png', size: '30x30')
       - if user_signed_in?
@@ -17,32 +18,14 @@
       - else
         li.logo_name  = 'メッセージ'
     ul
-      li  = image_tag('box.png', size: '30x30')
-      li.logo_name  = 'Grok'
-    ul
-      li  = image_tag('list.png', size: '30x30')
-      li.logo_name  = 'リスト'
-    ul
       li  = image_tag('bookmark.png', size: '30x30')
       - if user_signed_in?
         = link_to 'ブックマーク', list_bookmarks_path, class: 'logo_name font-size:30px'
       - else
         li.logo_name  = 'ブックマーク'
     ul
-      li  = image_tag('community.png', size: '30x30')
-      li.logo_name  = 'コミュニティ'
-    ul
-      li  = image_tag('logo-white.png', size: '23x23')
-      li.logo_name  = 'プレミアム'
-    ul
-      li  = image_tag('lightning.png', size: '30x30')
-      li.logo_name  = '認証済み組織'
-    ul
       li  = image_tag('profile.png', size: '30x30')
       - if user_signed_in?
         = link_to "プロフィール", user_path(current_user.id), class: 'logo_name font-size:30px'
       - else
         li.logo_name  = 'プロフィール'
-    ul
-      li  = image_tag('more.png', size: '30x30')
-      li.logo_name  = 'もっと見る'
