@@ -153,19 +153,26 @@
 #   )
 # end
 
-Favorite.create!(
+favorite1 = Favorite.create!(
   tweet_id: Tweet.last.id,
   user_id: User.first.id
 )
-Favorite.create!(
+favorite1.tweet.create_notification_favorite!(favorite1.user)
+
+favorite2 = Favorite.create!(
   tweet_id: Tweet.second_to_last.id,
   user_id: User.second_to_last.id
 )
-Retweet.create!(
+favorite2.tweet.create_notification_favorite!(favorite2.user)
+
+retweet1 = Retweet.create!(
   tweet_id: Tweet.last.id,
   user_id: User.last.id
 )
-Retweet.create!(
+retweet1.tweet.create_notification_retweet!(retweet1.user)
+
+retweet2 = Retweet.create!(
   tweet_id: Tweet.second.id,
   user_id: User.second.id
 )
+retweet2.tweet.create_notification_retweet!(retweet2.user)
