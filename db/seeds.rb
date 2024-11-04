@@ -153,27 +153,19 @@
 #   )
 # end
 
-Notification.create!(
-  visitor_id: User.first.id,
-  visited_id: User.last.id,
-  tweet_id: User.last.tweet.id,
-  action: 'favorite'
+Favorite.create!(
+  tweet_id: Tweet.last.id,
+  user_id: User.first.id
 )
-Notification.create!(
-  visitor_id: User.last.id,
-  visited_id: User.first.id,
-  tweet_id: User.first.tweet.id,
-  action: 'favorite'
+Favorite.create!(
+  tweet_id: Tweet.second_to_last.id,
+  user_id: User.seconde_to_last.id
 )
-Notification.create!(
-  visitor_id: User.second.id,
-  visited_id: User.second_to_last.id,
-  tweet_id: User.second.tweet.id,
-  action: 'retweet'
+Retweet.create!(
+  tweet_id: Tweet.lasd.id,
+  user_id: User.last.id
 )
-Notification.create!(
-  visitor_id: User.second_to_last.id,
-  visited_id: User.second.id,
-  tweet_id: User.second_to_last.id,
-  action: 'retweet'
+Retweet.create!(
+  tweet_id: Tweet.second.id,
+  user_id: User.second.id
 )
