@@ -28,10 +28,10 @@ class User < ApplicationRecord
 
   # 自分からの通知
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy,
-                                  inverse_of: 'passive_notificationsnotifications'
+                                  inverse_of: :visitor
   # 相手からの通知
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy,
-                                   inverse_of: 'active_notifications'
+                                   inverse_of: :visited
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
