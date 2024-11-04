@@ -162,7 +162,7 @@ Favorite.create!(
   user_id: User.second_to_last.id
 )
 Retweet.create!(
-  tweet_id: Tweet.lasd.id,
+  tweet_id: Tweet.last.id,
   user_id: User.last.id
 )
 Retweet.create!(
