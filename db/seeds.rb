@@ -169,7 +169,7 @@ favorite1 = Favorite.create!(
   tweet_id: tweet1.id,
   user_id: user1.id
 )
-favorite1.tweet.create_notification_favorite!(favorite1.user) unless Rails.env.test? || ENV['CI']
+favorite1.tweet.create_notification_favorite!(favorite1.user) if Rails.env.production? || Rails.env.development?
 
 user2 = find_or_create_user('apprentice@gmail.com', '070-1234-5678', '2000-12-01')
 tweet2 = find_or_create_tweet('Enough!!', user2)
@@ -178,7 +178,7 @@ favorite2 = Favorite.create!(
   tweet_id: tweet2.id,
   user_id: user2.id
 )
-favorite2.tweet.create_notification_favorite!(favorite2.user) unless Rails.env.test? || ENV['CI']
+favorite2.tweet.create_notification_favorite!(favorite2.user) if Rails.env.production? || Rails.env.development?
 
 user3 = find_or_create_user('rookie@gmail.com', '080-1234-5678', '2002-12-01')
 tweet3 = find_or_create_tweet("I'm done.", user3)
@@ -187,7 +187,7 @@ retweet1 = Retweet.create!(
   tweet_id: tweet3.id,
   user_id: user3.id
 )
-retweet1.tweet.create_notification_retweet!(retweet1.user) unless Rails.env.test? || ENV['CI']
+retweet1.tweet.create_notification_retweet!(retweet1.user) if Rails.env.production? || Rails.env.development?
 
 user4 = find_or_create_user('newface@gmail.com', '090-1234-5678', '2012-12-01')
 tweet4 = find_or_create_tweet('You are welcome.', user4)
@@ -196,4 +196,4 @@ retweet2 = Retweet.create!(
   tweet_id: tweet4.id,
   user_id: user4.id
 )
-retweet2.tweet.create_notification_retweet!(retweet2.user) unless Rails.env.test? || ENV['CI']
+retweet2.tweet.create_notification_retweet!(retweet2.user) if Rails.env.production? || Rails.env.development?
