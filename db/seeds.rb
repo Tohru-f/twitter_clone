@@ -207,3 +207,7 @@ retweet2 = Retweet.create!(
 if (Rails.env.production? || Rails.env.development?) && !ENV['CI']
   retweet2.tweet.create_notification_retweet!(retweet2.user)
 end
+
+Rails.logger.debug "ActionMailer::Base.smtp_settings: #{ActionMailer::Base.smtp_settings.inspect}"
+Rails.logger.debug "Rails.env: #{Rails.env}"
+Rails.logger.debug "ENV['CI']: #{ENV['CI']}"
