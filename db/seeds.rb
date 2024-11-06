@@ -153,6 +153,8 @@
 #   )
 # end
 
+ActionMailer::Base.deliveries.clear if defined?(ActionMailer::Base)
+
 def find_or_create_user(email, phone_number, birthday)
   User.find_by(email:) || User.create!(email:, phone_number:, birthday:,
                                        password: 'password')
