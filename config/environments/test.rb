@@ -40,26 +40,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.perform_deliveries = false
-
-  config.action_mailer.default_options = { from: 'sampleact2024@gmail.com' }
-
-  config.action_mailer.raise_delivery_errors = false
-
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
-
-  config.action_mailer.smtp_settings = {
-    address: ENV['SMTP_ADDRESS'],
-    port: ENV['SMTP_PORT'],
-    domain: ENV['SMTP_DOMAIN'],
-    user_name: ENV['SMTP_USERNAME'],
-    password: ENV['SMTP_PASSWORD'],
-    authentication: ENV['SMTP_AUTHENTICATION'],
-    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true'
-  }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

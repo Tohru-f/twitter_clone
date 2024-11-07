@@ -8,17 +8,6 @@ jobs:
   run-htmlbeautifier:
     name: Run htmlbeautifier
     runs-on: ubuntu-latest
-
-    env:
-      RAILS_ENV: test
-      SMTP_ADDRESS: 'smtp.gmail.com'
-      SMTP_PORT: '587'
-      SMTP_DOMAIN: 'gmail.com'
-      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      SMTP_AUTHENTICATION: 'plain'
-      SMTP_ENABLE_STARTTLS_AUTO: 'true'
-
     steps:
     - name: checkout pushed commit
       uses: actions/checkout@v2
