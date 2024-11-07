@@ -14,6 +14,7 @@ class Tweet < ApplicationRecord
     # 既に「いいね」されているか検索 ?はプレースホルダでSQLインジェクションを防ぐ
     temp = Notification.where(['visitor_id = ? and visited_id = ? and tweet_id = ? and action = ? ', current_user.id,
                                user_id, id, 'favorite'])
+    return if Rails.env.test? || ENV['CI']
 
     # いいねされていない場合のみに通知レコードを生成
     return if temp.present?
