@@ -10,7 +10,7 @@ class RetweetsController < ApplicationController
     @retweet = current_user.retweets.build(tweet_id: params[:tweet_id])
     tweet = Tweet.find(params[:tweet_id])
     if @retweet.save
-      tweet.create_notification_retweet!(current_user)
+      tweet.create_notification!(current_user, 'retweet')
       redirect_to home_index_path
     else
       redirect_to home_index_path, alert: 'リポストに失敗しました。'

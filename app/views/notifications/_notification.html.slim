@@ -24,7 +24,7 @@
         - else
           span
             = link_to tweet_path(notification.tweet) do
-              =image_tag avatar_url(notification.tweet.user).to_s, class: "icon_mini"
+              =image_tag notification.tweet.user.icon, class: "icon_image", size: '50x50'
               strong
                 = notification.tweet.user.name + 'さんの投稿'
         = "にコメントしました"

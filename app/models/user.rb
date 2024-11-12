@@ -48,13 +48,14 @@ class User < ApplicationRecord
   end
 
   def create_notification_follow!(current_user)
-    temp = Notification.where(['visitor_id = ? and visited_id = ? and action = ?', current_user.id, id, 'follow'])
+    temp = current_user.active_notifications.where(visited_id: id, action: 'follow')
     return if temp.present?
 
     notification = current_user.active_notifications.new(
       visited_id: id,
       action: 'follow'
     )
+    # 自分で自分のフォローはしない・できないので、current_user.id == user_idの判別は不要
     notification.save if notification.valid?
     NotificationMailer.send_notification(notification, User.find(id), current_user).deliver_now
   end

@@ -21,8 +21,8 @@ span
       = link_to "あなたの投稿", @notification.tweet, style: "font-weight: bold;"
     - else
       span
-        = link_to tweet_path(@notification.tweet) do
-          =image_tag avatar_url(@notification.tweet.user).to_s, class: "icon_mini"
+        = link_to Rails.application.routes.url_helpers.tweet_path(@notification.tweet) do
+          =image_tag @notification.tweet.user.icon, class: "icon_mini"
           strong
             = @notification.tweet.user.name + 'さんの投稿'
     = "にコメントしました"

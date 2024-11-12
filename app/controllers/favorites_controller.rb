@@ -10,7 +10,7 @@ class FavoritesController < ApplicationController
     @favorite = current_user.favorites.build(tweet_id: params[:tweet_id])
     tweet = Tweet.find(params[:tweet_id])
     if @favorite.save
-      tweet.create_notification_favorite!(current_user)
+      tweet.create_notification!(current_user, 'favorite')
       redirect_to home_index_path
     else
       redirect_to home_index_path, alert: 'お気に入りの保存に失敗しました。'
