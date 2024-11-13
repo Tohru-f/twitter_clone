@@ -10,14 +10,14 @@ class Tweet < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
-  def check_notification(current_user)
-    temp = current_user.active_notifications.where(visited_id: user_id, tweet_id: id, action: %w[favorite retweet])
+  def check_notification(current_user, action)
+    temp = current_user.active_notifications.where(visited_id: user_id, tweet_id: id, action:)
     temp.present?
   end
 
   def create_notification!(current_user, action, user_id:, comment_id: nil)
     # いいね、若しくはリツイートされている場合は処理を終了する
-    return if check_notification(current_user)
+    return if check_notification(current_user, action) && action == %w[favorite retweet]
 
     notification = current_user.active_notifications.new(
       tweet_id: id,
