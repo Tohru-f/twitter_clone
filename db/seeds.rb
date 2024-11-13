@@ -172,8 +172,8 @@ favorite1 = Favorite.create!(
   user_id: user1.id
 )
 if (Rails.env.production? || Rails.env.development?) && !ENV['CI']
-  favorite1.tweet.create_notification!('favorite',
-                                       user_id: favorite1.user.id)
+  favorite1.tweet.create_notification!(action: 'favorite',
+                                       user_id: favorite1.tweet.user.id)
 end
 
 user2 = find_or_create_user('apprentice@gmail.com', '070-1234-5678', '2000-12-01')
@@ -184,8 +184,8 @@ favorite2 = Favorite.create!(
   user_id: user2.id
 )
 if (Rails.env.production? || Rails.env.development?) && !ENV['CI']
-  favorite2.tweet.create_notification!('favorite',
-                                       user_id: favorite2.user.id)
+  favorite2.tweet.create_notification!(action: 'favorite',
+                                       user_id: favorite2.tweet.user.id)
 end
 
 user3 = find_or_create_user('rookie@gmail.com', '080-1234-5678', '2002-12-01')
@@ -196,8 +196,8 @@ retweet1 = Retweet.create!(
   user_id: user3.id
 )
 if (Rails.env.production? || Rails.env.development?) && !ENV['CI']
-  retweet1.tweet.create_notification!('retweet',
-                                      user_id: retweet1.user.id)
+  retweet1.tweet.create_notification!(action: 'retweet',
+                                      user_id: retweet1.tweet.user.id)
 end
 
 user4 = find_or_create_user('newface@gmail.com', '090-1234-5678', '2012-12-01')
@@ -208,8 +208,8 @@ retweet2 = Retweet.create!(
   user_id: user4.id
 )
 if (Rails.env.production? || Rails.env.development?) && !ENV['CI']
-  retweet2.tweet.create_notification!('retweet',
-                                      user_id: retweet2.user.id)
+  retweet2.tweet.create_notification!(action: 'retweet',
+                                      user_id: retweet2.tweet.user.id)
 end
 
 Rails.logger.debug "ActionMailer::Base.smtp_settings: #{ActionMailer::Base.smtp_settings.inspect}"
