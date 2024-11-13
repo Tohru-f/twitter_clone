@@ -15,7 +15,7 @@ class Tweet < ApplicationRecord
     temp.present?
   end
 
-  def create_notification!(current_user, action, user_id: nil, comment_id: nil)
+  def create_notification!(current_user, action, user_id:, comment_id: nil)
     # いいね、若しくはリツイートされている場合は処理を終了する
     return if check_notification(current_user)
 
