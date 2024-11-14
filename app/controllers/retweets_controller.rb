@@ -8,7 +8,9 @@ class RetweetsController < ApplicationController
   def create
     # buildメソッドはnewとは異なり、関連づけられたインスタンスを作成できる
     @retweet = current_user.retweets.build(tweet_id: params[:tweet_id])
+    tweet = Tweet.find(params[:tweet_id])
     if @retweet.save
+      tweet.create_notification!(current_user, 'retweet', user_id: tweet.user.id)
       redirect_to home_index_path
     else
       redirect_to home_index_path, alert: 'リポストに失敗しました。'

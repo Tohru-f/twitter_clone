@@ -7,4 +7,5 @@ class Comment < ApplicationRecord
   has_many :replies, class_name: 'Comment', foreign_key: 'parent_id', dependent: :destroy, inverse_of: :comment # 返信
   validates :sentence, presence: true, length: { in: 1..140 }
   has_many_attached :images
+  has_many :notifications, dependent: :destroy
 end

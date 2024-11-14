@@ -8,7 +8,9 @@ class FavoritesController < ApplicationController
   def create
     # buildメソッドはnewメソッドと違い関連付けたインスタンスを生成できる
     @favorite = current_user.favorites.build(tweet_id: params[:tweet_id])
+    tweet = Tweet.find(params[:tweet_id])
     if @favorite.save
+      tweet.create_notification!(current_user, 'favorite', user_id: tweet.user.id)
       redirect_to home_index_path
     else
       redirect_to home_index_path, alert: 'お気に入りの保存に失敗しました。'

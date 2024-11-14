@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     resources :messages, only: %i[new create]
   end
 
+  resources :notifications, only: :index
+
   resources :followers, only: %i[create destroy]
 
   resources :tweets, only: %i[new create show]

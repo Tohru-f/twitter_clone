@@ -20,6 +20,7 @@ class CommentsController < ApplicationController
     @comment.tweet_id = params[:tweet_id]
     @comment.parent_id = params[:id] if params[:id].present? && Comment.exists?(params[:id]) # 親コメントに対して返信する場合
     if @comment.save
+      @comment.tweet.create_notification_comment!(current_user, @comment.id)
       redirect_to home_index_path, notice: 'コメントを投稿しました。'
     else
       flash.now[:alert] = 'コンテンツの投稿に失敗しました。'
