@@ -22,12 +22,13 @@ module Myapp
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators do |g|
       g.test_framework :rspec,
-                       fixtures: false,
+                      #  fixtures: false,
                        view_specs: false,
                        helper_specs: false,
                        routing_specs: false
-      g.factory_bot false
+      # g.factory_bot false
     end
     config.action_view.default_form_builder = 'ApplicationFormBuilder'
+    config.i18n.default_locale = :ja
   end
 end

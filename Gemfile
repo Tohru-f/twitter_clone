@@ -87,6 +87,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'launchy'
 end
 
 gem 'html2slim-ruby3'
