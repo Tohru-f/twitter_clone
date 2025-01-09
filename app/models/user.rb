@@ -5,7 +5,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable, :omniauthable, omniauth_providers: %i[github]
+  # uidが存在する場合、同一のproviderカラムデータの範囲ではuidが重複しないこと
   validates :uid, uniqueness: { scope: :provider }, if: -> { uid.present? }
+
+  validates :email, presence: true
+  validates :phone_number, presence: true
+  validates :birthday, presence: true
 
   has_many :relations, dependent: :destroy
   has_many :following, through: :relations, source: :follower

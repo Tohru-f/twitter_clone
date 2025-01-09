@@ -19,7 +19,7 @@ body
                 = link_to image_tag(current_user.icon, alt: "Icon image", class: "icon_image", size: '50x50'), user_path(current_user.id)
           li
             .form-group
-              = f.text_field :content, placeholder: 'いまどうしてる？', class: "form-group form-control", style: "border: none"
+              = f.text_field :content, placeholder: 'いまどうしてる？', class: "form-group form-control", style: "border: none", for: "tweet_content"
         = f.label :images do
           = image_tag('photo.png', size: '35x35', class: 'image')
           = f.file_field :images, style: 'display:none', multiple: true
