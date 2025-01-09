@@ -27,6 +27,7 @@ Layout/LineLength:
     - app/controllers/comments_controller.rb
     - app/controllers/users_controller.rb
     - app/helpers/rooms_helper.rb
+    - spec/*/*
 Hc/RailsSpecificActionName:
   Exclude:
     - app/controllers/users/omniauth_callbacks_controller.rb
@@ -34,3 +35,9 @@ Hc/RailsSpecificActionName:
     - app/controllers/users_controller.rb
     - app/controllers/bookmarks_controller.rb
     - app/controllers/rooms_controller.rb
+Rspec/ExampleLength:
+  Exclude:
+    - spec/*/*
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/*/*
